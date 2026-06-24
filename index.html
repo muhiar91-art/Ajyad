@@ -35,18 +35,16 @@
     .status-grid input[type="radio"] { display: none; }
     .status-grid label { padding: 6px 14px; border: 1.5px solid #d0d9ea; border-radius: 20px; font-size: 12px; font-weight: 600; color: #4a5568; cursor: pointer; background: #f8fafd; user-select: none; transition: all 0.18s; }
     .pill-interest input:checked + label { background: #38a169; color:#fff; border-color: #38a169; }
-    .pill-pending  input:checked + label { background: #d69e2e; color:#fff; border-color: #d69e2e; }
-    .pill-closed   input:checked + label { background: #e53e3e; color:#fff; border-color: #e53e3e; }
+    .pill-pending input:checked + label { background: #d69e2e; color:#fff; border-color: #d69e2e; }
+    .pill-closed input:checked + label { background: #e53e3e; color:#fff; border-color: #e53e3e; }
     .pill-followup input:checked + label { background: #6b46c1; color:#fff; border-color: #6b46c1; }
-    .pill-deal     input:checked + label { background: #2b6cb0; color:#fff; border-color: #2b6cb0; }
+    .pill-deal input:checked + label { background: #2b6cb0; color:#fff; border-color: #2b6cb0; }
     .divider { height: 1px; background: #e8eef6; margin: 20px 0; }
     .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
     .btn { padding: 10px 24px; border-radius: 9px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all 0.18s; }
     .btn-primary { background: linear-gradient(135deg, #1a3c6e, #2a5298); color: #fff; box-shadow: 0 3px 10px rgba(42,82,152,0.3); }
-    .btn-primary:hover { transform: translateY(-1px); }
     .btn-secondary { background: #f0f4f8; color: #4a5568; border: 1.5px solid #d0d9ea; }
     .btn-print { background: #fff; color: #2a5298; border: 1.5px solid #2a5298; }
-    .btn-print:hover { background: #eef3fc; }
     .cards-section { margin-top: 28px; }
     .cards-title { font-size: 13px; font-weight: 700; color: #2a5298; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
     .cards-title::after { content: ''; flex: 1; height: 1px; background: #e2e8f4; }
@@ -55,9 +53,10 @@
     .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .card-num { font-size: 12px; font-weight: 900; color: #2a5298; background: #ebf4ff; padding: 3px 10px; border-radius: 10px; }
     .badge-visit { background: #ebf4ff; color: #2a5298; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-    .badge-call  { background: #e6fffa; color: #0f7c6e; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .badge-call { background: #e6fffa; color: #0f7c6e; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
     .card-delete { background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 18px; padding: 2px 6px; border-radius: 4px; }
-    .card-delete:hover { background: #fff5f5; }
+    .card-edit { background: none; border: 1.5px solid #2a5298; color: #2a5298; cursor: pointer; font-size: 12px; font-weight: 700; font-family: 'Cairo', sans-serif; padding: 4px 12px; border-radius: 8px; margin-left: 6px; }
+    .card-edit:hover { background: #eef3fc; }
     .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 16px; margin-bottom: 10px; }
     .card-field label { font-size: 10px; font-weight: 700; color: #718096; margin-bottom: 3px; display: block; }
     .card-field span { font-size: 13px; font-weight: 600; color: #1a202c; }
@@ -77,10 +76,9 @@
       @page { size: A4; margin: 10mm 12mm; }
       body { background: #fff; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .page-wrapper { max-width: 100%; }
-      .type-toggle, .form-inputs, .actions, .toast, .card-delete, .cards-title { display: none !important; }
+      .type-toggle, .form-inputs, .actions, .toast, .card-delete, .card-edit, .cards-title { display: none !important; }
       .form-card { box-shadow: none; border-radius: 0; padding: 0; }
       .header { border-radius: 0; padding: 14px 18px; }
-      .header-logo { font-size: 20px; }
       .cards-section { margin-top: 8px; }
       .visit-card { border: 1px solid #c0cce0; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; box-shadow: none; page-break-inside: avoid; break-inside: avoid; }
       .visit-card:nth-child(even) { background: #f8fafd !important; -webkit-print-color-adjust: exact; }
@@ -88,7 +86,6 @@
       .card-field span { font-size: 11px; }
       .card-notes p { font-size: 11px; padding: 6px 10px; background: #f0f4f8 !important; -webkit-print-color-adjust: exact; }
       .badge-visit, .badge-call, .result-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .card-header { margin-bottom: 8px; }
     }
     @media (max-width: 580px) {
       .grid-2, .card-grid { grid-template-columns: 1fr 1fr; }
@@ -118,22 +115,10 @@
       </div>
       <div class="section-title">بيانات العميل</div>
       <div class="grid-2">
-        <div class="field-group">
-          <label for="clientName">اسم العميل</label>
-          <input type="text" id="clientName" placeholder="أدخل اسم العميل" />
-        </div>
-        <div class="field-group">
-          <label for="clientPhone">رقم الهاتف</label>
-          <input type="tel" id="clientPhone" placeholder="07X XXX XXXX" />
-        </div>
-        <div class="field-group">
-          <label for="clientCompany">اسم الشركة / الجهة</label>
-          <input type="text" id="clientCompany" placeholder="اختياري" />
-        </div>
-        <div class="field-group">
-          <label for="visitDate">التاريخ</label>
-          <input type="date" id="visitDate" />
-        </div>
+        <div class="field-group"><label for="clientName">اسم العميل</label><input type="text" id="clientName" placeholder="أدخل اسم العميل" /></div>
+        <div class="field-group"><label for="clientPhone">رقم الهاتف</label><input type="tel" id="clientPhone" placeholder="07X XXX XXXX" /></div>
+        <div class="field-group"><label for="clientCompany">اسم الشركة / الجهة</label><input type="text" id="clientCompany" placeholder="اختياري" /></div>
+        <div class="field-group"><label for="visitDate">التاريخ</label><input type="date" id="visitDate" /></div>
       </div>
       <div class="divider"></div>
       <div class="section-title">تفاصيل التواصل</div>
@@ -151,10 +136,7 @@
             <option>أخرى</option>
           </select>
         </div>
-        <div class="field-group">
-          <label for="visitAgent">اسم المندوب</label>
-          <input type="text" id="visitAgent" placeholder="اسم المندوب" />
-        </div>
+        <div class="field-group"><label for="visitAgent">اسم المندوب</label><input type="text" id="visitAgent" placeholder="اسم المندوب" /></div>
       </div>
       <div class="field-group" style="margin-top:14px">
         <label for="visitNotes">ملاحظات</label>
@@ -183,20 +165,42 @@
       <div class="divider"></div>
       <div class="cards-title">سجل الزيارات والاتصالات</div>
       <div id="cardsContainer">
-        <div class="empty-cards" id="emptyMsg">
-          لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه
-        </div>
+        <div class="empty-cards" id="emptyMsg">لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه</div>
       </div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
+  function saveCards() {
+    const cards = [];
+    document.querySelectorAll('.visit-card').forEach(card => cards.push(card.outerHTML));
+    localStorage.setItem('ajyad_cards', JSON.stringify(cards));
+    localStorage.setItem('ajyad_count', count);
+  }
+  function loadCards() {
+    const saved = localStorage.getItem('ajyad_cards');
+    const savedCount = localStorage.getItem('ajyad_count');
+    if (saved) {
+      const cards = JSON.parse(saved);
+      if (cards.length > 0) {
+        const emptyMsg = document.getElementById('emptyMsg');
+        if (emptyMsg) emptyMsg.remove();
+        cards.forEach(html => {
+          const div = document.createElement('div');
+          div.innerHTML = html;
+          document.getElementById('cardsContainer').appendChild(div.firstChild);
+        });
+        count = parseInt(savedCount) || cards.length;
+      }
+    }
+  }
   const today = new Date();
   const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  document.getElementById('todayDate').textContent = today.toLocaleDateString('ar-SA', opts);
+  document.getElementById('todayDate').textContent = today.toLocaleDateString('ar-SA-u-ca-gregory', opts);
   document.getElementById('visitDate').value = today.toISOString().split('T')[0];
   let count = 0;
+  loadCards();
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
@@ -227,6 +231,7 @@
       <div class="card-header">
         <span class="card-num"># ${count}</span>
         <span class="${badgeClass}">${icon} ${type}</span>
+        <button class="card-edit" onclick="editCard(this)">✏️ تعديل</button>
         <button class="card-delete" onclick="deleteCard(this)">🗑</button>
       </div>
       <div class="card-grid">
@@ -243,14 +248,41 @@
     `;
     document.getElementById('cardsContainer').appendChild(card);
     showToast('✅ تمت الإضافة بنجاح');
+    saveCards();
     clearForm();
+  }
+  function editCard(btn) {
+    const card = btn.closest('.visit-card');
+    const fields = card.querySelectorAll('.card-field span');
+    const notesEl = card.querySelector('.card-notes p');
+    const typeEl = card.querySelector('.badge-visit, .badge-call');
+    document.getElementById('clientName').value = fields[0]?.textContent !== '—' ? fields[0]?.textContent : '';
+    document.getElementById('clientPhone').value = fields[1]?.textContent !== '—' ? fields[1]?.textContent : '';
+    document.getElementById('clientCompany').value = fields[2]?.textContent !== '—' ? fields[2]?.textContent : '';
+    document.getElementById('visitDate').value = fields[3]?.textContent !== '—' ? fields[3]?.textContent : '';
+    document.getElementById('visitPurpose').value = fields[4]?.textContent !== '—' ? fields[4]?.textContent : '';
+    document.getElementById('visitAgent').value = fields[5]?.textContent !== '—' ? fields[5]?.textContent : '';
+    document.getElementById('visitNotes').value = notesEl?.textContent !== '—' ? notesEl?.textContent || '' : '';
+    document.getElementById('nextAction').value = fields[7]?.textContent !== '—' ? fields[7]?.textContent || '' : '';
+    if (typeEl?.classList.contains('badge-call')) document.getElementById('typeCall').checked = true;
+    else document.getElementById('typeVisit').checked = true;
+    card.remove();
+    saveCards();
+    if (!document.querySelector('.visit-card')) {
+      const div = document.createElement('div');
+      div.className = 'empty-cards'; div.id = 'emptyMsg';
+      div.textContent = 'لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه';
+      document.getElementById('cardsContainer').appendChild(div);
+    }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    showToast('✏️ جاهز للتعديل');
   }
   function deleteCard(btn) {
     btn.closest('.visit-card').remove();
+    saveCards();
     if (!document.querySelector('.visit-card')) {
       const div = document.createElement('div');
-      div.className = 'empty-cards';
-      div.id = 'emptyMsg';
+      div.className = 'empty-cards'; div.id = 'emptyMsg';
       div.textContent = 'لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه';
       document.getElementById('cardsContainer').appendChild(div);
     }
