@@ -7,85 +7,93 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Cairo', sans-serif; background: #f0f4f8; min-height: 100vh; padding: 30px 16px; direction: rtl; }
-    .page-wrapper { max-width: 860px; margin: 0 auto; }
-    .header { background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%); border-radius: 16px 16px 0 0; padding: 22px 28px 18px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .header-logo { font-size: 24px; font-weight: 900; }
+    body { font-family: 'Cairo', sans-serif; background: #f0f4f8; min-height: 100vh; direction: rtl; }
+    .page-wrapper { max-width: 860px; margin: 0 auto; padding: 0 0 40px; }
+    .header { background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%); padding: 18px 24px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .header-logo { font-size: 22px; font-weight: 900; }
     .header-logo span { color: #7eb8f7; }
-    .header-sub { font-size: 12px; opacity: 0.75; margin-top: 3px; }
-    .header-date-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 8px 16px; text-align: center; }
-    .header-date-badge .date-label { font-size: 10px; opacity: 0.7; margin-bottom: 3px; }
-    .header-date-badge .date-value { font-size: 14px; font-weight: 700; }
-    .form-card { background: #fff; border-radius: 0 0 16px 16px; padding: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .header-sub { font-size: 11px; opacity: 0.75; margin-top: 2px; }
+    .header-date-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 7px 14px; text-align: center; }
+    .header-date-badge .date-label { font-size: 10px; opacity: 0.7; margin-bottom: 2px; }
+    .header-date-badge .date-value { font-size: 13px; font-weight: 700; }
+    .tabs { display: flex; background: #fff; border-bottom: 2px solid #e2e8f4; position: sticky; top: 0; z-index: 100; }
+    .tab { flex: 1; padding: 13px; text-align: center; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; color: #718096; cursor: pointer; border: none; background: none; transition: all 0.18s; }
+    .tab.active { color: #2a5298; border-bottom: 3px solid #2a5298; margin-bottom: -2px; }
+    .page { display: none; padding: 20px 16px; }
+    .page.active { display: block; }
+    .form-card { background: #fff; border-radius: 12px; padding: 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); margin-bottom: 14px; }
     .section-title { font-size: 12px; font-weight: 700; color: #2a5298; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
     .section-title::after { content: ''; flex: 1; height: 1px; background: #e2e8f4; }
-    .type-toggle { display: inline-flex; border: 1.5px solid #d0d9ea; border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+    .type-toggle { display: inline-flex; border: 1.5px solid #d0d9ea; border-radius: 10px; overflow: hidden; margin-bottom: 18px; }
     .type-toggle input[type="radio"] { display: none; }
-    .type-toggle label { padding: 9px 24px; font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700; color: #4a5568; cursor: pointer; background: #f8fafd; transition: all 0.18s; border: none; user-select: none; }
+    .type-toggle label { padding: 8px 22px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; color: #4a5568; cursor: pointer; background: #f8fafd; transition: all 0.18s; border: none; user-select: none; }
     .type-toggle label + label { border-right: 1.5px solid #d0d9ea; }
     .type-toggle input[type="radio"]:checked + label { background: #2a5298; color: #fff; }
     .type-toggle input#typeCall:checked + label { background: #0f7c6e; color: #fff; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .field-group { display: flex; flex-direction: column; gap: 5px; }
-    label { font-size: 12px; font-weight: 600; color: #4a5568; }
-    input[type="text"], input[type="date"], input[type="tel"], select, textarea { width: 100%; padding: 9px 12px; border: 1.5px solid #d0d9ea; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 13px; color: #1a202c; background: #f8fafd; outline: none; transition: border-color 0.2s; direction: rtl; }
-    input:focus, select:focus, textarea:focus { border-color: #2a5298; box-shadow: 0 0 0 3px rgba(42,82,152,0.12); background: #fff; }
-    textarea { resize: vertical; min-height: 70px; }
-    .status-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field-group { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 11px; font-weight: 600; color: #4a5568; }
+    input[type="text"], input[type="date"], input[type="tel"], select, textarea { width: 100%; padding: 8px 11px; border: 1.5px solid #d0d9ea; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 13px; color: #1a202c; background: #f8fafd; outline: none; transition: border-color 0.2s; direction: rtl; }
+    input:focus, select:focus, textarea:focus { border-color: #2a5298; box-shadow: 0 0 0 3px rgba(42,82,152,0.10); background: #fff; }
+    textarea { resize: vertical; min-height: 65px; }
+    .status-grid { display: flex; flex-wrap: wrap; gap: 6px; }
     .status-grid input[type="radio"] { display: none; }
-    .status-grid label { padding: 6px 14px; border: 1.5px solid #d0d9ea; border-radius: 20px; font-size: 12px; font-weight: 600; color: #4a5568; cursor: pointer; background: #f8fafd; user-select: none; transition: all 0.18s; }
+    .status-grid label { padding: 5px 12px; border: 1.5px solid #d0d9ea; border-radius: 20px; font-size: 11px; font-weight: 600; color: #4a5568; cursor: pointer; background: #f8fafd; user-select: none; transition: all 0.18s; }
     .pill-interest input:checked + label { background: #38a169; color:#fff; border-color: #38a169; }
     .pill-pending input:checked + label { background: #d69e2e; color:#fff; border-color: #d69e2e; }
     .pill-closed input:checked + label { background: #e53e3e; color:#fff; border-color: #e53e3e; }
     .pill-followup input:checked + label { background: #6b46c1; color:#fff; border-color: #6b46c1; }
     .pill-deal input:checked + label { background: #2b6cb0; color:#fff; border-color: #2b6cb0; }
-    .divider { height: 1px; background: #e8eef6; margin: 20px 0; }
-    .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
-    .btn { padding: 10px 24px; border-radius: 9px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all 0.18s; }
+    .divider { height: 1px; background: #e8eef6; margin: 16px 0; }
+    .actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+    .btn { padding: 9px 20px; border-radius: 9px; font-family: 'Cairo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all 0.18s; }
     .btn-primary { background: linear-gradient(135deg, #1a3c6e, #2a5298); color: #fff; box-shadow: 0 3px 10px rgba(42,82,152,0.3); }
     .btn-secondary { background: #f0f4f8; color: #4a5568; border: 1.5px solid #d0d9ea; }
     .btn-print { background: #fff; color: #2a5298; border: 1.5px solid #2a5298; }
-    .cards-section { margin-top: 28px; }
-    .cards-title { font-size: 13px; font-weight: 700; color: #2a5298; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-    .cards-title::after { content: ''; flex: 1; height: 1px; background: #e2e8f4; }
-    .visit-card { background: #fff; border: 1.5px solid #e2e8f4; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.05); page-break-inside: avoid; }
+    .btn-newday { background: linear-gradient(135deg, #276749, #38a169); color: #fff; box-shadow: 0 3px 10px rgba(56,161,105,0.3); width: 100%; margin-top: 6px; padding: 12px; font-size: 14px; font-family: 'Cairo', sans-serif; font-weight: 700; border: none; border-radius: 9px; cursor: pointer; }
+    .visit-card { background: #fff; border: 1.5px solid #e2e8f4; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); page-break-inside: avoid; }
     .visit-card:nth-child(even) { background: #f8fafd; }
-    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-    .card-num { font-size: 12px; font-weight: 900; color: #2a5298; background: #ebf4ff; padding: 3px 10px; border-radius: 10px; }
-    .badge-visit { background: #ebf4ff; color: #2a5298; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-    .badge-call { background: #e6fffa; color: #0f7c6e; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-    .card-delete { background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 18px; padding: 2px 6px; border-radius: 4px; }
-    .card-edit { background: none; border: 1.5px solid #2a5298; color: #2a5298; cursor: pointer; font-size: 12px; font-weight: 700; font-family: 'Cairo', sans-serif; padding: 4px 12px; border-radius: 8px; margin-left: 6px; }
-    .card-edit:hover { background: #eef3fc; }
-    .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 16px; margin-bottom: 10px; }
-    .card-field label { font-size: 10px; font-weight: 700; color: #718096; margin-bottom: 3px; display: block; }
-    .card-field span { font-size: 13px; font-weight: 600; color: #1a202c; }
-    .card-notes { margin-top: 10px; }
-    .card-notes label { font-size: 10px; font-weight: 700; color: #718096; margin-bottom: 4px; display: block; }
-    .card-notes p { font-size: 13px; color: #2d3748; line-height: 1.7; background: #f0f4f8; border-radius: 8px; padding: 8px 12px; white-space: pre-wrap; }
-    .result-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+    .card-num { font-size: 11px; font-weight: 900; color: #2a5298; background: #ebf4ff; padding: 2px 8px; border-radius: 8px; }
+    .badge-visit { background: #ebf4ff; color: #2a5298; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+    .badge-call { background: #e6fffa; color: #0f7c6e; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; }
+    .card-btns { margin-right: auto; display: flex; gap: 6px; }
+    .card-delete { background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 16px; padding: 2px 5px; border-radius: 4px; }
+    .card-edit { background: none; border: 1.5px solid #2a5298; color: #2a5298; cursor: pointer; font-size: 11px; font-weight: 700; font-family: 'Cairo', sans-serif; padding: 3px 10px; border-radius: 7px; }
+    .card-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 12px; margin-bottom: 8px; }
+    .card-field label { font-size: 9px; font-weight: 700; color: #718096; margin-bottom: 2px; display: block; }
+    .card-field span { font-size: 12px; font-weight: 600; color: #1a202c; }
+    .card-notes { margin-top: 8px; }
+    .card-notes label { font-size: 9px; font-weight: 700; color: #718096; margin-bottom: 3px; display: block; }
+    .card-notes p { font-size: 12px; color: #2d3748; line-height: 1.6; background: #f0f4f8; border-radius: 7px; padding: 7px 10px; white-space: pre-wrap; }
+    .result-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
     .r-مهتم { background: #c6f6d5; color: #276749; }
     .r-متردد { background: #fefcbf; color: #744210; }
     .r-تم-الاتفاق { background: #bee3f8; color: #2c5282; }
     .r-يحتاج-متابعة { background: #e9d8fd; color: #553c9a; }
     .r-رفض { background: #fed7d7; color: #9b2c2c; }
-    .empty-cards { text-align: center; color: #a0aec0; padding: 28px; font-size: 13px; border: 1.5px dashed #d0d9ea; border-radius: 12px; }
-    .toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a3c6e; color: #fff; padding: 12px 24px; border-radius: 10px; font-family: 'Cairo', sans-serif; font-weight: 600; font-size: 13px; box-shadow: 0 6px 24px rgba(0,0,0,0.2); transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); z-index: 999; white-space: nowrap; }
+    .empty-cards { text-align: center; color: #a0aec0; padding: 24px; font-size: 13px; border: 1.5px dashed #d0d9ea; border-radius: 12px; }
+    .day-group { background: #fff; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }
+    .day-header { background: linear-gradient(135deg, #1a3c6e, #2a5298); color: #fff; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+    .day-header h3 { font-size: 14px; font-weight: 700; }
+    .day-header .day-count { background: rgba(255,255,255,0.2); padding: 2px 10px; border-radius: 20px; font-size: 11px; }
+    .day-header .day-toggle { font-size: 16px; transition: transform 0.2s; }
+    .day-header.collapsed .day-toggle { transform: rotate(-90deg); }
+    .day-body { padding: 14px 16px; }
+    .day-body.hidden { display: none; }
+    .day-actions { display: flex; gap: 8px; justify-content: flex-end; padding: 0 16px 12px; }
+    .btn-danger { background: #fff; color: #e53e3e; border: 1.5px solid #e53e3e; font-size: 12px; padding: 6px 14px; }
+    .empty-history { text-align: center; color: #a0aec0; padding: 40px 20px; font-size: 14px; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1a3c6e; color: #fff; padding: 11px 22px; border-radius: 10px; font-family: 'Cairo', sans-serif; font-weight: 600; font-size: 13px; box-shadow: 0 6px 24px rgba(0,0,0,0.2); transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); z-index: 999; white-space: nowrap; }
     .toast.show { transform: translateX(-50%) translateY(0); }
     @media print {
       @page { size: A4; margin: 10mm 12mm; }
-      body { background: #fff; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .page-wrapper { max-width: 100%; }
-      .type-toggle, .form-inputs, .actions, .toast, .card-delete, .card-edit, .cards-title { display: none !important; }
-      .form-card { box-shadow: none; border-radius: 0; padding: 0; }
-      .header { border-radius: 0; padding: 14px 18px; }
-      .cards-section { margin-top: 8px; }
-      .visit-card { border: 1px solid #c0cce0; border-radius: 8px; padding: 12px 16px; margin-bottom: 10px; box-shadow: none; page-break-inside: avoid; break-inside: avoid; }
-      .visit-card:nth-child(even) { background: #f8fafd !important; -webkit-print-color-adjust: exact; }
-      .card-grid { grid-template-columns: 1fr 1fr 1fr; gap: 8px 14px; }
-      .card-field span { font-size: 11px; }
-      .card-notes p { font-size: 11px; padding: 6px 10px; background: #f0f4f8 !important; -webkit-print-color-adjust: exact; }
-      .badge-visit, .badge-call, .result-badge { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .tabs, .actions, .btn-newday, .card-btns, .toast, .day-actions { display: none !important; }
+      .page { display: block !important; padding: 0; }
+      .visit-card { box-shadow: none; break-inside: avoid; }
+      .day-body.hidden { display: block !important; }
+      .badge-visit, .badge-call, .result-badge { -webkit-print-color-adjust: exact; }
     }
     @media (max-width: 580px) {
       .grid-2, .card-grid { grid-template-columns: 1fr 1fr; }
@@ -98,15 +106,19 @@
   <div class="header">
     <div>
       <div class="header-logo">متابعة <span>العملاء</span></div>
-      <div class="header-sub">سجل الزيارات والاتصالات اليومية</div>
+      <div class="header-sub">سجل الزيارات والاتصالات</div>
     </div>
     <div class="header-date-badge">
       <div class="date-label">تاريخ اليوم</div>
       <div class="date-value" id="todayDate">—</div>
     </div>
   </div>
-  <div class="form-card">
-    <div class="form-inputs">
+  <div class="tabs">
+    <button class="tab active" onclick="showPage('today', this)">📋 اليوم</button>
+    <button class="tab" onclick="showPage('history', this)">📅 السجل</button>
+  </div>
+  <div class="page active" id="page-today">
+    <div class="form-card">
       <div class="type-toggle">
         <input type="radio" name="contactType" id="typeVisit" value="زيارة" checked />
         <label for="typeVisit">🚗 زيارة</label>
@@ -117,7 +129,7 @@
       <div class="grid-2">
         <div class="field-group"><label for="clientName">اسم العميل</label><input type="text" id="clientName" placeholder="أدخل اسم العميل" /></div>
         <div class="field-group"><label for="clientPhone">رقم الهاتف</label><input type="tel" id="clientPhone" placeholder="07X XXX XXXX" /></div>
-        <div class="field-group"><label for="clientCompany">اسم الشركة / الجهة</label><input type="text" id="clientCompany" placeholder="اختياري" /></div>
+        <div class="field-group"><label for="clientCompany">الشركة / الجهة</label><input type="text" id="clientCompany" placeholder="اختياري" /></div>
         <div class="field-group"><label for="visitDate">التاريخ</label><input type="date" id="visitDate" /></div>
       </div>
       <div class="divider"></div>
@@ -138,7 +150,7 @@
         </div>
         <div class="field-group"><label for="visitAgent">اسم المندوب</label><input type="text" id="visitAgent" placeholder="اسم المندوب" /></div>
       </div>
-      <div class="field-group" style="margin-top:14px">
+      <div class="field-group" style="margin-top:12px">
         <label for="visitNotes">ملاحظات</label>
         <textarea id="visitNotes" placeholder="سجّل تفاصيل ما تم مناقشته..."></textarea>
       </div>
@@ -151,151 +163,237 @@
         <div class="pill-followup"><input type="radio" name="visitResult" id="r4" value="يحتاج متابعة" /><label for="r4">🔁 يحتاج متابعة</label></div>
         <div class="pill-closed"><input type="radio" name="visitResult" id="r5" value="رفض" /><label for="r5">❌ رفض</label></div>
       </div>
-      <div class="field-group" style="margin-top:14px">
-        <label for="nextAction">الإجراء التالي / موعد المتابعة</label>
-        <input type="text" id="nextAction" placeholder="مثال: الاتصال بعد أسبوع، إرسال عرض سعر..." />
+      <div class="field-group" style="margin-top:12px">
+        <label for="nextAction">الإجراء التالي</label>
+        <input type="text" id="nextAction" placeholder="مثال: الاتصال بعد أسبوع..." />
       </div>
       <div class="actions">
         <button class="btn btn-secondary" onclick="clearForm()">مسح</button>
         <button class="btn btn-print" onclick="window.print()">🖨️ طباعة</button>
-        <button class="btn btn-primary" onclick="addCard()">➕ إضافة للسجل</button>
+        <button class="btn btn-primary" onclick="addCard()">➕ إضافة</button>
       </div>
     </div>
-    <div class="cards-section">
-      <div class="divider"></div>
-      <div class="cards-title">سجل الزيارات والاتصالات</div>
-      <div id="cardsContainer">
-        <div class="empty-cards" id="emptyMsg">لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه</div>
-      </div>
+    <div id="todayCards">
+      <div class="empty-cards" id="emptyMsg">لا توجد زيارات اليوم بعد</div>
+    </div>
+    <button class="btn-newday" onclick="saveDay()">📅 حفظ اليوم والبدء بيوم جديد</button>
+  </div>
+  <div class="page" id="page-history">
+    <div id="historyContainer">
+      <div class="empty-history">📭 لا يوجد سجل أيام سابقة بعد</div>
     </div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
 <script>
-  function saveCards() {
-    const cards = [];
-    document.querySelectorAll('.visit-card').forEach(card => cards.push(card.outerHTML));
-    localStorage.setItem('ajyad_cards', JSON.stringify(cards));
-    localStorage.setItem('ajyad_count', count);
-  }
-  function loadCards() {
-    const saved = localStorage.getItem('ajyad_cards');
-    const savedCount = localStorage.getItem('ajyad_count');
-    if (saved) {
-      const cards = JSON.parse(saved);
-      if (cards.length > 0) {
-        const emptyMsg = document.getElementById('emptyMsg');
-        if (emptyMsg) emptyMsg.remove();
-        cards.forEach(html => {
-          const div = document.createElement('div');
-          div.innerHTML = html;
-          document.getElementById('cardsContainer').appendChild(div.firstChild);
-        });
-        count = parseInt(savedCount) || cards.length;
-      }
-    }
-  }
   const today = new Date();
   const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   document.getElementById('todayDate').textContent = today.toLocaleDateString('ar-SA-u-ca-gregory', opts);
   document.getElementById('visitDate').value = today.toISOString().split('T')[0];
   let count = 0;
-  loadCards();
+
+  function showPage(name, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    el.classList.add('active');
+    if (name === 'history') renderHistory();
+  }
+
   function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2500);
   }
+
   function resultClass(r) { return 'r-' + r.replace(/ /g, '-'); }
-  function addCard() {
-    const name    = document.getElementById('clientName').value.trim();
-    const phone   = document.getElementById('clientPhone').value.trim();
-    const company = document.getElementById('clientCompany').value.trim();
-    const date    = document.getElementById('visitDate').value;
-    const purpose = document.getElementById('visitPurpose').value;
-    const agent   = document.getElementById('visitAgent').value.trim();
-    const notes   = document.getElementById('visitNotes').value.trim();
-    const result  = document.querySelector('input[name="visitResult"]:checked')?.value || '';
-    const next    = document.getElementById('nextAction').value.trim();
-    const type    = document.querySelector('input[name="contactType"]:checked')?.value || 'زيارة';
-    if (!name) { showToast('⚠️ الرجاء إدخال اسم العميل'); return; }
-    const emptyMsg = document.getElementById('emptyMsg');
-    if (emptyMsg) emptyMsg.remove();
-    count++;
-    const icon = type === 'اتصال' ? '📞' : '🚗';
-    const badgeClass = type === 'اتصال' ? 'badge-call' : 'badge-visit';
-    const card = document.createElement('div');
-    card.className = 'visit-card';
-    card.innerHTML = `
+
+  function buildCardHTML(data, idx) {
+    const icon = data.type === 'اتصال' ? '📞' : '🚗';
+    const badgeClass = data.type === 'اتصال' ? 'badge-call' : 'badge-visit';
+    return `
       <div class="card-header">
-        <span class="card-num"># ${count}</span>
-        <span class="${badgeClass}">${icon} ${type}</span>
-        <button class="card-edit" onclick="editCard(this)">✏️ تعديل</button>
-        <button class="card-delete" onclick="deleteCard(this)">🗑</button>
+        <span class="card-num"># ${idx}</span>
+        <span class="${badgeClass}">${icon} ${data.type}</span>
+        <div class="card-btns">
+          <button class="card-edit" onclick="editCard(this)">✏️ تعديل</button>
+          <button class="card-delete" onclick="deleteCard(this)">🗑</button>
+        </div>
       </div>
       <div class="card-grid">
-        <div class="card-field"><label>اسم العميل</label><span>${name}</span></div>
-        <div class="card-field"><label>الهاتف</label><span dir="ltr">${phone || '—'}</span></div>
-        <div class="card-field"><label>الشركة / الجهة</label><span>${company || '—'}</span></div>
-        <div class="card-field"><label>التاريخ</label><span>${date || '—'}</span></div>
-        <div class="card-field"><label>الهدف</label><span>${purpose || '—'}</span></div>
-        <div class="card-field"><label>المندوب</label><span>${agent || '—'}</span></div>
-        <div class="card-field"><label>النتيجة</label><span>${result ? `<span class="result-badge ${resultClass(result)}">${result}</span>` : '—'}</span></div>
-        <div class="card-field" style="grid-column: span 2"><label>الإجراء التالي</label><span>${next || '—'}</span></div>
+        <div class="card-field"><label>اسم العميل</label><span>${data.name}</span></div>
+        <div class="card-field"><label>الهاتف</label><span dir="ltr">${data.phone || '—'}</span></div>
+        <div class="card-field"><label>الشركة</label><span>${data.company || '—'}</span></div>
+        <div class="card-field"><label>التاريخ</label><span>${data.date || '—'}</span></div>
+        <div class="card-field"><label>الهدف</label><span>${data.purpose || '—'}</span></div>
+        <div class="card-field"><label>المندوب</label><span>${data.agent || '—'}</span></div>
+        <div class="card-field"><label>النتيجة</label><span>${data.result ? '<span class="result-badge ' + resultClass(data.result) + '">' + data.result + '</span>' : '—'}</span></div>
+        <div class="card-field" style="grid-column:span 2"><label>الإجراء التالي</label><span>${data.next || '—'}</span></div>
       </div>
-      ${notes ? `<div class="card-notes"><label>الملاحظات</label><p>${notes}</p></div>` : ''}
+      ${data.notes ? '<div class="card-notes"><label>الملاحظات</label><p>' + data.notes + '</p></div>' : ''}
     `;
-    document.getElementById('cardsContainer').appendChild(card);
-    showToast('✅ تمت الإضافة بنجاح');
-    saveCards();
+  }
+
+  function addCard() {
+    const name = document.getElementById('clientName').value.trim();
+    const phone = document.getElementById('clientPhone').value.trim();
+    const company = document.getElementById('clientCompany').value.trim();
+    const date = document.getElementById('visitDate').value;
+    const purpose = document.getElementById('visitPurpose').value;
+    const agent = document.getElementById('visitAgent').value.trim();
+    const notes = document.getElementById('visitNotes').value.trim();
+    const result = document.querySelector('input[name="visitResult"]:checked')?.value || '';
+    const next = document.getElementById('nextAction').value.trim();
+    const type = document.querySelector('input[name="contactType"]:checked')?.value || 'زيارة';
+    if (!name) { showToast('⚠️ الرجاء إدخال اسم العميل'); return; }
+    document.getElementById('emptyMsg')?.remove();
+    count++;
+    const data = { name, phone, company, date, purpose, agent, notes, result, next, type };
+    const card = document.createElement('div');
+    card.className = 'visit-card';
+    card.dataset.info = JSON.stringify(data);
+    card.innerHTML = buildCardHTML(data, count);
+    document.getElementById('todayCards').appendChild(card);
+    saveTodayToStorage();
+    showToast('✅ تمت الإضافة');
     clearForm();
   }
+
   function editCard(btn) {
     const card = btn.closest('.visit-card');
-    const fields = card.querySelectorAll('.card-field span');
-    const notesEl = card.querySelector('.card-notes p');
-    const typeEl = card.querySelector('.badge-visit, .badge-call');
-    document.getElementById('clientName').value = fields[0]?.textContent !== '—' ? fields[0]?.textContent : '';
-    document.getElementById('clientPhone').value = fields[1]?.textContent !== '—' ? fields[1]?.textContent : '';
-    document.getElementById('clientCompany').value = fields[2]?.textContent !== '—' ? fields[2]?.textContent : '';
-    document.getElementById('visitDate').value = fields[3]?.textContent !== '—' ? fields[3]?.textContent : '';
-    document.getElementById('visitPurpose').value = fields[4]?.textContent !== '—' ? fields[4]?.textContent : '';
-    document.getElementById('visitAgent').value = fields[5]?.textContent !== '—' ? fields[5]?.textContent : '';
-    document.getElementById('visitNotes').value = notesEl?.textContent !== '—' ? notesEl?.textContent || '' : '';
-    document.getElementById('nextAction').value = fields[7]?.textContent !== '—' ? fields[7]?.textContent || '' : '';
-    if (typeEl?.classList.contains('badge-call')) document.getElementById('typeCall').checked = true;
+    const data = JSON.parse(card.dataset.info || '{}');
+    document.getElementById('clientName').value = data.name || '';
+    document.getElementById('clientPhone').value = data.phone || '';
+    document.getElementById('clientCompany').value = data.company || '';
+    document.getElementById('visitDate').value = data.date || '';
+    document.getElementById('visitPurpose').value = data.purpose || '';
+    document.getElementById('visitAgent').value = data.agent || '';
+    document.getElementById('visitNotes').value = data.notes || '';
+    document.getElementById('nextAction').value = data.next || '';
+    if (data.type === 'اتصال') document.getElementById('typeCall').checked = true;
     else document.getElementById('typeVisit').checked = true;
     card.remove();
-    saveCards();
-    if (!document.querySelector('.visit-card')) {
-      const div = document.createElement('div');
-      div.className = 'empty-cards'; div.id = 'emptyMsg';
-      div.textContent = 'لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه';
-      document.getElementById('cardsContainer').appendChild(div);
-    }
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    saveTodayToStorage();
+    checkEmpty();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     showToast('✏️ جاهز للتعديل');
   }
+
   function deleteCard(btn) {
     btn.closest('.visit-card').remove();
-    saveCards();
-    if (!document.querySelector('.visit-card')) {
+    saveTodayToStorage();
+    checkEmpty();
+  }
+
+  function checkEmpty() {
+    if (!document.querySelector('#todayCards .visit-card')) {
       const div = document.createElement('div');
       div.className = 'empty-cards'; div.id = 'emptyMsg';
-      div.textContent = 'لا توجد سجلات بعد — أضف زيارة أو اتصال من الفورم أعلاه';
-      document.getElementById('cardsContainer').appendChild(div);
+      div.textContent = 'لا توجد زيارات اليوم بعد';
+      document.getElementById('todayCards').appendChild(div);
     }
   }
+
+  function saveTodayToStorage() {
+    const cards = [];
+    document.querySelectorAll('#todayCards .visit-card').forEach(c => cards.push(JSON.parse(c.dataset.info || '{}')));
+    localStorage.setItem('ajyad_today', JSON.stringify(cards));
+    localStorage.setItem('ajyad_count', count);
+  }
+
+  function saveDay() {
+    const cards = [];
+    document.querySelectorAll('#todayCards .visit-card').forEach(c => cards.push(JSON.parse(c.dataset.info || '{}')));
+    if (cards.length === 0) { showToast('⚠️ لا توجد زيارات لحفظها'); return; }
+    const dateLabel = today.toLocaleDateString('ar-SA-u-ca-gregory', opts);
+    const history = JSON.parse(localStorage.getItem('ajyad_history') || '[]');
+    history.unshift({ date: dateLabel, cards });
+    localStorage.setItem('ajyad_history', JSON.stringify(history));
+    localStorage.removeItem('ajyad_today');
+    localStorage.removeItem('ajyad_count');
+    document.getElementById('todayCards').innerHTML = '<div class="empty-cards" id="emptyMsg">لا توجد زيارات اليوم بعد</div>';
+    count = 0;
+    showToast('✅ تم حفظ اليوم بنجاح!');
+  }
+
+  function loadToday() {
+    const saved = localStorage.getItem('ajyad_today');
+    const savedCount = localStorage.getItem('ajyad_count');
+    if (saved) {
+      const cards = JSON.parse(saved);
+      if (cards.length > 0) {
+        document.getElementById('emptyMsg')?.remove();
+        count = parseInt(savedCount) || 0;
+        cards.forEach((data, i) => {
+          const card = document.createElement('div');
+          card.className = 'visit-card';
+          card.dataset.info = JSON.stringify(data);
+          card.innerHTML = buildCardHTML(data, i + 1);
+          document.getElementById('todayCards').appendChild(card);
+        });
+      }
+    }
+  }
+
+  function renderHistory() {
+    const history = JSON.parse(localStorage.getItem('ajyad_history') || '[]');
+    const container = document.getElementById('historyContainer');
+    if (history.length === 0) { container.innerHTML = '<div class="empty-history">📭 لا يوجد سجل أيام سابقة بعد</div>'; return; }
+    container.innerHTML = '';
+    history.forEach((day, dayIdx) => {
+      const group = document.createElement('div');
+      group.className = 'day-group';
+      let cardsHTML = day.cards.map((d, i) => '<div class="visit-card">' + buildCardHTML(d, i + 1) + '</div>').join('');
+      group.innerHTML = `
+        <div class="day-header" onclick="toggleDay(this)">
+          <h3>📅 ${day.date}</h3>
+          <span class="day-count">${day.cards.length} زيارة</span>
+          <span class="day-toggle">▼</span>
+        </div>
+        <div class="day-body">${cardsHTML}</div>
+        <div class="day-actions">
+          <button class="btn btn-print" onclick="printDay(${dayIdx})">🖨️ طباعة</button>
+          <button class="btn btn-danger" onclick="deleteDay(${dayIdx})">🗑 حذف اليوم</button>
+        </div>
+      `;
+      container.appendChild(group);
+    });
+  }
+
+  function toggleDay(header) {
+    header.classList.toggle('collapsed');
+    header.nextElementSibling.classList.toggle('hidden');
+  }
+
+  function deleteDay(idx) {
+    if (!confirm('هل تريد حذف هذا اليوم؟')) return;
+    const history = JSON.parse(localStorage.getItem('ajyad_history') || '[]');
+    history.splice(idx, 1);
+    localStorage.setItem('ajyad_history', JSON.stringify(history));
+    renderHistory();
+    showToast('🗑 تم حذف اليوم');
+  }
+
+  function printDay(idx) {
+    const history = JSON.parse(localStorage.getItem('ajyad_history') || '[]');
+    const day = history[idx];
+    const win = window.open('', '_blank');
+    let cardsHTML = day.cards.map((d, i) => '<div class="visit-card">' + buildCardHTML(d, i + 1) + '</div>').join('');
+    win.document.write('<!DOCTYPE html><html dir="rtl"><head><meta charset="UTF-8"><title>' + day.date + '</title><style>@import url(\'https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap\');body{font-family:\'Cairo\',sans-serif;padding:20px;direction:rtl;-webkit-print-color-adjust:exact}.visit-card{border:1px solid #c0cce0;border-radius:8px;padding:12px 16px;margin-bottom:12px;break-inside:avoid}.card-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}.card-num{font-size:11px;font-weight:900;color:#2a5298;background:#ebf4ff;padding:2px 8px;border-radius:8px}.badge-visit{background:#ebf4ff;color:#2a5298;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}.badge-call{background:#e6fffa;color:#0f7c6e;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}.card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px 12px;margin-bottom:8px}.card-field label{font-size:9px;font-weight:700;color:#718096;margin-bottom:2px;display:block}.card-field span{font-size:12px;font-weight:600;color:#1a202c}.card-notes{margin-top:8px}.card-notes label{font-size:9px;font-weight:700;color:#718096;margin-bottom:3px;display:block}.card-notes p{font-size:12px;color:#2d3748;background:#f0f4f8;border-radius:7px;padding:7px 10px;white-space:pre-wrap}.result-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700}.r-مهتم{background:#c6f6d5;color:#276749}.r-متردد{background:#fefcbf;color:#744210}.r-تم-الاتفاق{background:#bee3f8;color:#2c5282}.r-يحتاج-متابعة{background:#e9d8fd;color:#553c9a}.r-رفض{background:#fed7d7;color:#9b2c2c}h2{color:#2a5298;margin-bottom:16px}.card-btns{display:none}</style></head><body><h2>📅 ' + day.date + '</h2>' + cardsHTML + '<script>window.onload=()=>window.print()<\/script></body></html>');
+    win.document.close();
+  }
+
   function clearForm() {
-    ['clientName','clientPhone','clientCompany','visitAgent','visitNotes','nextAction']
-      .forEach(id => document.getElementById(id).value = '');
+    ['clientName','clientPhone','clientCompany','visitAgent','visitNotes','nextAction'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('visitDate').value = today.toISOString().split('T')[0];
     document.getElementById('visitPurpose').value = '';
     const checked = document.querySelector('input[name="visitResult"]:checked');
     if (checked) checked.checked = false;
     document.getElementById('typeVisit').checked = true;
   }
+
+  loadToday();
 </script>
 </body>
 </html>
