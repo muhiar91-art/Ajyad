@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة العمولة – أجياد</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #1a1a2e;
+    --gold:   #b8860b;
+    --gold2:  #d4a017;
+    --cream:  #fdf8f0;
+    --card:   #ffffff;
+    --muted:  #6b7280;
+    --border: #e5e0d5;
+    --green:  #15803d;
+    --red:    #b91c1c;
+  }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 20px 16px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .brand { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
+  .title { font-size: 26px; font-weight: 800; color: var(--ink); line-height: 1.2; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
+  .sum-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 10px; text-align: center; }
+  .sum-card.accent { background: var(--ink); border-color: var(--ink); }
+  .sum-label { font-size: 11px; color: var(--muted); font-weight: 500; margin-bottom: 6px; }
+  .sum-card.accent .sum-label { color: var(--gold2); }
+  .sum-value { font-size: 17px; font-weight: 800; color: var(--green); direction: ltr; display: block; }
+  .sum-card.accent .sum-value { color: var(--gold2); font-size: 19px; }
+  .sum-count { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+  .input-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 20px; }
+  .section-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; display: inline-block; width: 4px; height: 16px; background: var(--gold); border-radius: 2px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 12px; font-weight: 500; color: var(--muted); }
+  input, select { border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: 'Tajawal', sans-serif; font-size: 15px; color: var(--ink); background: #fafafa; outline: none; transition: border-color .2s; width: 100%; }
+  input:focus, select:focus { border-color: var(--gold); background: #fff; }
+  input[type="number"] { direction: ltr; text-align: right; }
+  input::placeholder { color: #ccc; }
+
+  .btn-add { width: 100%; padding: 13px; background: var(--ink); color: var(--gold2); border: none; border-radius: 10px; font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: opacity .2s; }
+  .btn-add:active { opacity: .8; }
+
+  .table-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
+  .table-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+  .btn-clear { font-size: 12px; color: var(--red); background: none; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Tajawal', sans-serif; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: #f9f6f0; font-size: 12px; font-weight: 700; color: var(--muted); padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); }
+  tbody tr { border-bottom: 1px solid #f3f0ea; transition: background .15s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #fdf8f0; }
+  td { padding: 12px 12px; font-size: 14px; vertical-align: middle; }
+  .td-client { font-weight: 600; }
+  .td-amount { direction: ltr; text-align: right; color: var(--muted); }
+  .td-commission { direction: ltr; text-align: right; font-weight: 700; color: var(--green); }
+  .td-date { font-size: 12px; color: var(--muted); }
+  .td-status span { font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 600; }
+  .status-collected { background: #dcfce7; color: #15803d; }
+  .status-pending   { background: #fef9c3; color: #92400e; }
+  .btn-del { background: none; border: none; cursor: pointer; font-size: 16px; color: #d1d5db; padding: 2px 6px; border-radius: 4px; transition: color .15s; }
+  .btn-del:hover { color: var(--red); }
+
+  .empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
+  .empty-icon { font-size: 36px; margin-bottom: 8px; }
+
+  .total-bar { background: var(--ink); border-radius: 14px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .total-bar-label { font-size: 13px; color: var(--gold2); font-weight: 500; }
+  .total-bar-value { font-size: 22px; font-weight: 800; color: #fff; direction: ltr; }
+  .total-bar-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .input-section, .btn-del, .btn-clear, .btn-add { display: none !important; }
+    .table-section, .summary, .total-bar { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">شركة أجياد للصناعات الجلدية والكرتونية</div>
+  <div class="title">حاسبة العمولة</div>
+  <div class="subtitle">عمولة ٢٪ على المبالغ المحصّلة</div>
+</div>
+
+<div class="summary">
+  <div class="sum-card">
+    <div class="sum-label">إجمالي التحصيل</div>
+    <span class="sum-value" id="totalCollected">0</span>
+    <div class="sum-count" id="countCollected">٠ فاتورة</div>
+  </div>
+  <div class="sum-card accent">
+    <div class="sum-label">عمولتك الكلية</div>
+    <span class="sum-value" id="totalCommission">0</span>
+    <div class="sum-count" style="color:rgba(255,255,255,.4)">ربحك الصافي</div>
+  </div>
+  <div class="sum-card">
+    <div class="sum-label">قيد الانتظار</div>
+    <span class="sum-value" id="totalPending" style="color:#b45309">0</span>
+    <div class="sum-count" id="countPending">٠ فاتورة</div>
+  </div>
+</div>
+
+<div class="input-section">
+  <div class="section-title">إضافة تحصيل جديد</div>
+  <div class="row">
+    <div class="field full">
+      <label>اسم العميل</label>
+      <input type="text" id="iClient" placeholder="مثال: شركة النور">
+    </div>
+  </div>
+  <div class="row">
+    <div class="field">
+      <label>المبلغ المحصّل (د.أ)</label>
+      <input type="number" id="iAmount" placeholder="0.00" min="0" step="0.01">
+    </div>
+    <div class="field">
+      <label>تاريخ التحصيل</label>
+      <input type="date" id="iDate">
+    </div>
+  </div>
+  <div class="row">
+    <div class="field full">
+      <label>الحالة</label>
+      <select id="iStatus">
+        <option value="collected">✅ تم التحصيل</option>
+        <option value="pending">⏳ قيد الانتظار</option>
+      </select>
+    </div>
+  </div>
+  <button class="btn-add" onclick="addEntry()">+ إضافة إلى الجدول</button>
+</div>
+
+<div class="table-section">
+  <div class="table-header">
+    <div class="section-title" style="margin:0">سجل التحصيلات</div>
+    <button class="btn-clear" onclick="clearAll()">مسح الكل</button>
+  </div>
+  <div id="tableWrap">
+    <div class="empty">
+      <div class="empty-icon">📋</div>
+      ما في بيانات بعد — أضف أول تحصيل ⬆️
+    </div>
+  </div>
+</div>
+
+<div class="total-bar">
+  <div>
+    <div class="total-bar-label">🏆 إجمالي عمولتك المستحقة</div>
+    <div class="total-bar-sub">من التحصيلات المؤكدة فقط</div>
+  </div>
+  <div style="text-align:left">
+    <div class="total-bar-value" id="finalCommission">٠.٠٠ د.أ</div>
+  </div>
+</div>
+
+<script>
+  const RATE = 0.02;
+  let entries = JSON.parse(localStorage.getItem('ajyad_commission') || '[]');
+
+  document.getElementById('iDate').valueAsDate = new Date();
+
+  function toArabicNum(n) {
+    return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+  }
+  function fmt(n) {
+    return Number(n).toLocaleString('en', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+  function formatDate(str) {
+    if (!str) return '—';
+    const d = new Date(str + 'T00:00:00');
+    return d.toLocaleDateString('ar-SA', {year:'numeric', month:'short', day:'numeric'});
+  }
+  function save() {
+    localStorage.setItem('ajyad_commission', JSON.stringify(entries));
+  }
+
+  function addEntry() {
+    const client = document.getElementById('iClient').value.trim();
+    const amount = parseFloat(document.getElementById('iAmount').value);
+    const date   = document.getElementById('iDate').value;
+    const status = document.getElementById('iStatus').value;
+
+    if (!client) { alert('الرجاء إدخال اسم العميل'); return; }
+    if (!amount || amount <= 0) { alert('الرجاء إدخال مبلغ صحيح'); return; }
+
+    entries.push({ id: Date.now(), client, amount, date, status, commission: +(amount * RATE).toFixed(2) });
+    save(); render();
+
+    document.getElementById('iClient').value = '';
+    document.getElementById('iAmount').value = '';
+    document.getElementById('iDate').valueAsDate = new Date();
+    document.getElementById('iStatus').value = 'collected';
+  }
+
+  function deleteEntry(id) {
+    entries = entries.filter(e => e.id !== id);
+    save(); render();
+  }
+
+  function clearAll() {
+    if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
+      entries = []; save(); render();
+    }
+  }
+
+  function render() {
+    const collected = entries.filter(e => e.status === 'collected');
+    const pending   = entries.filter(e => e.status === 'pending');
+    const totalCol  = collected.reduce((s, e) => s + e.amount, 0);
+    const totalPen  = pending.reduce((s, e) => s + e.amount, 0);
+    const totalComm = collected.reduce((s, e) => s + e.commission, 0);
+
+    document.getElementById('totalCollected').textContent  = fmt(totalCol) + ' د.أ';
+    document.getElementById('totalPending').textContent    = fmt(totalPen) + ' د.أ';
+    document.getElementById('totalCommission').textContent = fmt(totalComm) + ' د.أ';
+    document.getElementById('countCollected').textContent  = toArabicNum(collected.length) + ' فاتورة';
+    document.getElementById('countPending').textContent    = toArabicNum(pending.length) + ' فاتورة';
+    document.getElementById('finalCommission').textContent = fmt(totalComm) + ' د.أ';
+
+    const wrap = document.getElementById('tableWrap');
+    if (entries.length === 0) {
+      wrap.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>ما في بيانات بعد — أضف أول تحصيل ⬆️</div>`;
+      return;
+    }
+
+    const sorted = [...entries].sort((a, b) => b.id - a.id);
+    let rows = sorted.map(e => `
+      <tr>
+        <td class="td-client">${e.client}</td>
+        <td class="td-amount">${fmt(e.amount)} د.أ</td>
+        <td class="td-commission">${fmt(e.commission)} د.أ</td>
+        <td class="td-date">${formatDate(e.date)}</td>
+        <td class="td-status">
+          <span class="${e.status === 'collected' ? 'status-collected' : 'status-pending'}">
+            ${e.status === 'collected' ? 'محصّل' : 'انتظار'}
+          </span>
+        </td>
+        <td><button class="btn-del" onclick="deleteEntry(${e.id})">✕</button></td>
+      </tr>
+    `).join('');
+
+    wrap.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>العميل</th>
+            <th>المبلغ</th>
+            <th>العمولة ٢٪</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  render();
+</script>
+</body>
+</html>
