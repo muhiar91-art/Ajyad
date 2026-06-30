@@ -6,34 +6,17 @@
 <title>حاسبة العمولة – أجياد</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --ink:    #1a1a2e;
-    --gold:   #b8860b;
-    --gold2:  #d4a017;
-    --cream:  #fdf8f0;
-    --card:   #ffffff;
-    --muted:  #6b7280;
-    --border: #e5e0d5;
-    --green:  #15803d;
-    --red:    #b91c1c;
+    --ink: #1a1a2e; --gold: #b8860b; --gold2: #d4a017;
+    --cream: #fdf8f0; --card: #ffffff; --muted: #6b7280;
+    --border: #e5e0d5; --green: #15803d; --red: #b91c1c;
   }
-
-  body {
-    font-family: 'Tajawal', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    min-height: 100vh;
-    padding: 20px 16px 60px;
-  }
-
+  body { font-family: 'Tajawal', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; padding: 20px 16px 60px; }
   .header { text-align: center; margin-bottom: 28px; }
   .brand { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; margin-bottom: 4px; }
   .title { font-size: 26px; font-weight: 800; color: var(--ink); line-height: 1.2; }
   .subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
-
   .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
   .sum-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 10px; text-align: center; }
   .sum-card.accent { background: var(--ink); border-color: var(--ink); }
@@ -42,11 +25,9 @@
   .sum-value { font-size: 17px; font-weight: 800; color: var(--green); direction: ltr; display: block; }
   .sum-card.accent .sum-value { color: var(--gold2); font-size: 19px; }
   .sum-count { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
   .input-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; margin-bottom: 20px; }
   .section-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
   .section-title::before { content: ''; display: inline-block; width: 4px; height: 16px; background: var(--gold); border-radius: 2px; }
-
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
   .field { display: flex; flex-direction: column; gap: 5px; }
   .field.full { grid-column: 1 / -1; }
@@ -55,42 +36,50 @@
   input:focus, select:focus { border-color: var(--gold); background: #fff; }
   input[type="number"] { direction: ltr; text-align: right; }
   input::placeholder { color: #ccc; }
-
   .btn-add { width: 100%; padding: 13px; background: var(--ink); color: var(--gold2); border: none; border-radius: 10px; font-family: 'Tajawal', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: opacity .2s; }
   .btn-add:active { opacity: .8; }
-
   .table-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 20px; }
   .table-header { padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
   .btn-clear { font-size: 12px; color: var(--red); background: none; border: 1px solid #fca5a5; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-family: 'Tajawal', sans-serif; }
-
   table { width: 100%; border-collapse: collapse; }
   thead th { background: #f9f6f0; font-size: 12px; font-weight: 700; color: var(--muted); padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--border); }
   tbody tr { border-bottom: 1px solid #f3f0ea; transition: background .15s; }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: #fdf8f0; }
-  td { padding: 12px 12px; font-size: 14px; vertical-align: middle; }
+  td { padding: 10px 12px; font-size: 14px; vertical-align: middle; }
   .td-client { font-weight: 600; }
   .td-amount { direction: ltr; text-align: right; color: var(--muted); }
   .td-commission { direction: ltr; text-align: right; font-weight: 700; color: var(--green); }
   .td-date { font-size: 12px; color: var(--muted); }
   .td-status span { font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 600; }
   .status-collected { background: #dcfce7; color: #15803d; }
-  .status-pending   { background: #fef9c3; color: #92400e; }
-  .btn-del { background: none; border: none; cursor: pointer; font-size: 16px; color: #d1d5db; padding: 2px 6px; border-radius: 4px; transition: color .15s; }
+  .status-pending { background: #fef9c3; color: #92400e; }
+  .btn-del { background: none; border: none; cursor: pointer; font-size: 15px; color: #d1d5db; padding: 2px 4px; border-radius: 4px; }
   .btn-del:hover { color: var(--red); }
-
+  .btn-edit { background: none; border: none; cursor: pointer; font-size: 15px; color: #d1d5db; padding: 2px 4px; border-radius: 4px; }
+  .btn-edit:hover { color: var(--gold); }
   .empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
   .empty-icon { font-size: 36px; margin-bottom: 8px; }
-
   .total-bar { background: var(--ink); border-radius: 14px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; }
   .total-bar-label { font-size: 13px; color: var(--gold2); font-weight: 500; }
   .total-bar-value { font-size: 22px; font-weight: 800; color: #fff; direction: ltr; }
   .total-bar-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 2px; }
-
+  /* Modal */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:100; align-items:center; justify-content:center; padding:20px; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:#fff; border-radius:16px; padding:20px; width:100%; max-width:400px; }
+  .modal-title { font-size:16px; font-weight:700; margin-bottom:16px; color:var(--ink); }
+  .modal label { font-size:12px; font-weight:500; color:var(--muted); display:block; margin-bottom:4px; margin-top:10px; }
+  .modal input, .modal select { border:1.5px solid var(--border); border-radius:8px; padding:10px 12px; font-family:'Tajawal',sans-serif; font-size:15px; color:var(--ink); background:#fafafa; outline:none; width:100%; }
+  .modal input[type="number"] { direction:ltr; text-align:right; }
+  .modal-btns { display:flex; gap:10px; margin-top:16px; }
+  .btn-save { flex:1; padding:12px; background:var(--ink); color:var(--gold2); border:none; border-radius:10px; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:700; cursor:pointer; }
+  .btn-cancel { padding:12px 16px; background:none; border:1.5px solid var(--border); border-radius:10px; font-family:'Tajawal',sans-serif; font-size:15px; cursor:pointer; color:var(--muted); }
   @media print {
     body { background: #fff; padding: 0; }
-    .input-section, .btn-del, .btn-clear, .btn-add { display: none !important; }
+    .input-section, .btn-del, .btn-edit, .btn-clear, .btn-add, .modal-overlay { display: none !important; }
     .table-section, .summary, .total-bar { break-inside: avoid; }
+    .tax-bar { display: none !important; }
   }
 </style>
 </head>
@@ -139,11 +128,18 @@
     </div>
   </div>
   <div class="row">
-    <div class="field full">
+    <div class="field">
       <label>الحالة</label>
       <select id="iStatus">
         <option value="collected">✅ تم التحصيل</option>
         <option value="pending">⏳ قيد الانتظار</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>نوع العمولة</label>
+      <select id="iDeduct">
+        <option value="full">💰 كاملة (٢٪)</option>
+        <option value="deducted" id="deductOpt">🔻 بعد خصم ضريبة</option>
       </select>
     </div>
   </div>
@@ -153,7 +149,10 @@
 <div class="table-section">
   <div class="table-header">
     <div class="section-title" style="margin:0">سجل التحصيلات</div>
-    <button class="btn-clear" onclick="clearAll()">مسح الكل</button>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-clear" style="border-color:#fde68a; color:#92400e;" onclick="archiveAndReset()">📦 تصفية وبدء جدول جديد</button>
+      <button class="btn-clear" onclick="clearAll()">🗑️ مسح الكل</button>
+    </div>
   </div>
   <div id="tableWrap">
     <div class="empty">
@@ -173,11 +172,77 @@
   </div>
 </div>
 
+<div class="tax-bar" style="display:flex; gap:10px; margin-top:14px; align-items:center;">
+  <div style="background:#fff; border:1px solid var(--border); border-radius:12px; padding:14px 16px; flex:1;">
+    <div style="font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:500;">⚙️ نسبة ضريبة المبيعات</div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <input type="number" id="taxRate" value="16" min="0" max="100" step="0.1"
+        style="width:70px; border:1.5px solid var(--border); border-radius:8px; padding:8px; font-size:15px; font-family:Tajawal,sans-serif; direction:ltr; text-align:center;"
+        oninput="updateTaxLabel()">
+      <span style="font-size:14px; color:var(--ink);">٪</span>
+      <span style="font-size:12px; color:var(--muted);">العمولة الفعلية: <b id="effectiveRate">١.٧٢٪</b></span>
+    </div>
+  </div>
+  <button onclick="window.print()" style="background:var(--gold); color:#fff; border:none; border-radius:12px; padding:14px 18px; font-family:Tajawal,sans-serif; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap;">
+    🖨️ طباعة
+  </button>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-title">✏️ تعديل التحصيل</div>
+    <input type="hidden" id="eId">
+    <label>اسم العميل</label>
+    <input type="text" id="eClient">
+    <label>المبلغ (د.أ)</label>
+    <input type="number" id="eAmount" min="0" step="0.01">
+    <label>التاريخ</label>
+    <input type="date" id="eDate">
+    <label>الحالة</label>
+    <select id="eStatus">
+      <option value="collected">✅ تم التحصيل</option>
+      <option value="pending">⏳ قيد الانتظار</option>
+    </select>
+    <label>نوع العمولة</label>
+    <select id="eDeduct">
+      <option value="full">💰 كاملة (٢٪)</option>
+      <option value="deducted">🔻 بعد خصم ضريبة</option>
+    </select>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn-save" onclick="saveEdit()">💾 حفظ التعديل</button>
+    </div>
+  </div>
+</div>
+
 <script>
   const RATE = 0.02;
   let entries = JSON.parse(localStorage.getItem('ajyad_commission') || '[]');
-
   document.getElementById('iDate').valueAsDate = new Date();
+
+  function getTaxRate() {
+    const v = parseFloat(document.getElementById('taxRate').value);
+    return isNaN(v) ? 16 : Math.min(100, Math.max(0, v));
+  }
+
+  function calcCommission(amount, deduct) {
+    if (deduct === 'deducted') {
+      const tax = getTaxRate();
+      return +(amount / (1 + tax / 100) * RATE).toFixed(4);
+    }
+    return +(amount * RATE).toFixed(4);
+  }
+
+  function updateTaxLabel() {
+    const tax = getTaxRate();
+    const effective = (RATE / (1 + tax / 100) * 100).toFixed(4).replace(/\.?0+$/, '');
+    document.getElementById('effectiveRate').textContent = effective + '٪';
+    const opt = document.getElementById('deductOpt');
+    if (opt) opt.textContent = `🔻 بعد خصم ${tax}٪ ضريبة (${effective}٪)`;
+    const eOpt = document.querySelector('#eDeduct option[value="deducted"]');
+    if (eOpt) eOpt.textContent = `🔻 بعد خصم ${tax}٪ ضريبة (${effective}٪)`;
+  }
 
   function toArabicNum(n) {
     return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
@@ -199,17 +264,16 @@
     const amount = parseFloat(document.getElementById('iAmount').value);
     const date   = document.getElementById('iDate').value;
     const status = document.getElementById('iStatus').value;
-
+    const deduct = document.getElementById('iDeduct').value;
     if (!client) { alert('الرجاء إدخال اسم العميل'); return; }
     if (!amount || amount <= 0) { alert('الرجاء إدخال مبلغ صحيح'); return; }
-
-    entries.push({ id: Date.now(), client, amount, date, status, commission: +(amount * RATE).toFixed(2) });
+    entries.push({ id: Date.now(), client, amount, date, status, deduct, commission: calcCommission(amount, deduct) });
     save(); render();
-
     document.getElementById('iClient').value = '';
     document.getElementById('iAmount').value = '';
     document.getElementById('iDate').valueAsDate = new Date();
     document.getElementById('iStatus').value = 'collected';
+    document.getElementById('iDeduct').value = 'full';
   }
 
   function deleteEntry(id) {
@@ -217,10 +281,56 @@
     save(); render();
   }
 
+  function openEdit(id) {
+    const e = entries.find(x => x.id === id);
+    if (!e) return;
+    document.getElementById('eId').value     = id;
+    document.getElementById('eClient').value = e.client;
+    document.getElementById('eAmount').value = e.amount;
+    document.getElementById('eDate').value   = e.date;
+    document.getElementById('eStatus').value = e.status;
+    document.getElementById('eDeduct').value = e.deduct || 'full';
+    updateTaxLabel();
+    document.getElementById('editModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('editModal').classList.remove('open');
+  }
+
+  function saveEdit() {
+    const id     = parseInt(document.getElementById('eId').value);
+    const client = document.getElementById('eClient').value.trim();
+    const amount = parseFloat(document.getElementById('eAmount').value);
+    const date   = document.getElementById('eDate').value;
+    const status = document.getElementById('eStatus').value;
+    const deduct = document.getElementById('eDeduct').value;
+    if (!client) { alert('الرجاء إدخال اسم العميل'); return; }
+    if (!amount || amount <= 0) { alert('الرجاء إدخال مبلغ صحيح'); return; }
+    entries = entries.map(e => e.id === id ? { ...e, client, amount, date, status, deduct, commission: calcCommission(amount, deduct) } : e);
+    save(); render(); closeModal();
+  }
+
   function clearAll() {
-    if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
+    if (confirm('⚠️ هل أنت متأكد من مسح جميع البيانات؟\nهاد الإجراء لا يمكن التراجع عنه.')) {
       entries = []; save(); render();
     }
+  }
+
+  function archiveAndReset() {
+    if (entries.length === 0) { alert('ما في بيانات لتصفيتها'); return; }
+    const totalComm = entries.filter(e => e.status === 'collected').reduce((s, e) => s + e.commission, 0);
+    const confirmMsg = `⚠️ تأكيد التصفية\n\nراح يتم حفظ سجل التحصيلات الحالي في الأرشيف (${entries.length} فاتورة، عمولة ${fmt(totalComm)} د.أ) وبدء جدول جديد فاضي.\n\nهل أنت متأكد؟`;
+    if (!confirm(confirmMsg)) return;
+
+    let history = JSON.parse(localStorage.getItem('ajyad_commission_history') || '[]');
+    history.push({ archivedAt: new Date().toISOString(), entries: entries, totalCommission: totalComm });
+    localStorage.setItem('ajyad_commission_history', JSON.stringify(history));
+
+    entries = [];
+    save();
+    render();
+    alert('✅ تم حفظ الأرشيف وبدء جدول جديد');
   }
 
   function render() {
@@ -229,53 +339,44 @@
     const totalCol  = collected.reduce((s, e) => s + e.amount, 0);
     const totalPen  = pending.reduce((s, e) => s + e.amount, 0);
     const totalComm = collected.reduce((s, e) => s + e.commission, 0);
-
     document.getElementById('totalCollected').textContent  = fmt(totalCol) + ' د.أ';
     document.getElementById('totalPending').textContent    = fmt(totalPen) + ' د.أ';
     document.getElementById('totalCommission').textContent = fmt(totalComm) + ' د.أ';
     document.getElementById('countCollected').textContent  = toArabicNum(collected.length) + ' فاتورة';
     document.getElementById('countPending').textContent    = toArabicNum(pending.length) + ' فاتورة';
     document.getElementById('finalCommission').textContent = fmt(totalComm) + ' د.أ';
-
     const wrap = document.getElementById('tableWrap');
     if (entries.length === 0) {
       wrap.innerHTML = `<div class="empty"><div class="empty-icon">📋</div>ما في بيانات بعد — أضف أول تحصيل ⬆️</div>`;
       return;
     }
-
     const sorted = [...entries].sort((a, b) => b.id - a.id);
     let rows = sorted.map(e => `
       <tr>
         <td class="td-client">${e.client}</td>
         <td class="td-amount">${fmt(e.amount)} د.أ</td>
-        <td class="td-commission">${fmt(e.commission)} د.أ</td>
-        <td class="td-date">${formatDate(e.date)}</td>
-        <td class="td-status">
-          <span class="${e.status === 'collected' ? 'status-collected' : 'status-pending'}">
-            ${e.status === 'collected' ? 'محصّل' : 'انتظار'}
-          </span>
+        <td class="td-commission">
+          ${fmt(e.commission)} د.أ
+          <br><span style="font-size:11px;color:#9ca3af">${e.deduct === 'deducted' ? '🔻 بعد ضريبة' : '💰 كاملة'}</span>
         </td>
-        <td><button class="btn-del" onclick="deleteEntry(${e.id})">✕</button></td>
+        <td class="td-date">${formatDate(e.date)}</td>
+        <td class="td-status"><span class="${e.status === 'collected' ? 'status-collected' : 'status-pending'}">${e.status === 'collected' ? 'محصّل' : 'انتظار'}</span></td>
+        <td style="white-space:nowrap">
+          <button class="btn-edit" onclick="openEdit(${e.id})">✏️</button>
+          <button class="btn-del" onclick="deleteEntry(${e.id})">✕</button>
+        </td>
       </tr>
     `).join('');
-
     wrap.innerHTML = `
       <table>
-        <thead>
-          <tr>
-            <th>العميل</th>
-            <th>المبلغ</th>
-            <th>العمولة ٢٪</th>
-            <th>التاريخ</th>
-            <th>الحالة</th>
-            <th></th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th>العميل</th><th>المبلغ</th><th>العمولة</th><th>التاريخ</th><th>الحالة</th><th></th>
+        </tr></thead>
         <tbody>${rows}</tbody>
-      </table>
-    `;
+      </table>`;
   }
 
+  updateTaxLabel();
   render();
 </script>
 </body>
