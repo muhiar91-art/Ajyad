@@ -1,1 +1,863 @@
-{"deals":[{"id":"deal1","name":"Bein sport (1) 4k 2025","createdAt":"2025-01-01","entries":[{"id":"d1e1","type":"purchase","category":"k4","amount":19500,"qty":672,"date":"2025-01-01","note":""},{"id":"d1e2","type":"fee","amount":500,"date":"2025-01-01","note":"أجرة سمير"},{"id":"d1e3","type":"sale","category":"k4","amount":22660,"qty":672,"date":"2025-01-01","note":"انباعت كل القطع"}]},{"id":"deal2","name":"Bein (2) pvr and 4k 26/1","createdAt":"2026-01-26","entries":[{"id":"d2e1","type":"purchase","category":"pvr","amount":51642,"qty":1140,"date":"2026-01-26","note":""},{"id":"d2e2","type":"purchase","category":"k4","amount":25027,"qty":144,"date":"2026-01-26","note":""},{"id":"d2e3","type":"fee","amount":110,"date":"2026-01-26","note":"أجرة سمير"},{"id":"d2e4","type":"sale","category":"pvr","amount":28703,"qty":1140,"date":"2026-01-26","note":"كاش محصّل لحد الآن - باقي القيمة بشيكات، PVR خلص كله انباع"},{"id":"d2e5","type":"sale","category":"k4","amount":2745,"qty":25,"date":"2026-01-26","note":"كاش محصّل لحد الآن - باقي 119 قطعة 4K لسا بالمخزون"}]}],"investor":{"name":"عمو محمد","entries":[{"id":"i1","type":"capital","amount":8600,"date":"2026-01-26","note":"أخذتهم من عمو عبدالسلام"},{"id":"i2","type":"capital","amount":18500,"date":"2026-01-26","note":"أخذتهم من عمو عبدالسلام"},{"id":"i3","type":"capital","amount":19500,"date":"2026-01-26","note":"أخذتهم من عمو عبدالسلام"},{"id":"i4","type":"repay","amount":14966,"date":"2026-01-26","note":"دفعتهم لحساب Bein بتاريخ اليوم"},{"id":"i5","type":"capital","amount":17300,"date":"2026-02-08","note":""},{"id":"i6","type":"capital","amount":14960,"date":"2026-02-18","note":""},{"id":"i7","type":"repay","amount":7200,"date":"2026-05-17","note":""},{"id":"i8","type":"repay","amount":12800,"date":"2026-07-08","note":""}]},"checks":[{"id":"c1","type":"returned","amount":1200,"dueDate":"","note":"شيك مرتجع","status":"pending"},{"id":"c2","type":"returned","amount":3300,"dueDate":"","note":"شيك مرتجع","status":"pending"},{"id":"c3","type":"deferred","amount":1415,"dueDate":"2026-07-22","note":"","status":"pending"},{"id":"c4","type":"deferred","amount":1000,"dueDate":"2026-07-20","note":"","status":"pending"},{"id":"c5","type":"deferred","amount":500,"dueDate":"2026-08-07","note":"","status":"pending"},{"id":"c6","type":"deferred","amount":600,"dueDate":"2026-08-08","note":"","status":"pending"},{"id":"c7","type":"deferred","amount":1659,"dueDate":"2026-08-20","note":"","status":"pending"},{"id":"c8","type":"deferred","amount":415,"dueDate":"2026-08-10","note":"","status":"pending"},{"id":"c9","type":"deferred","amount":500,"dueDate":"2026-08-31","note":"","status":"pending"},{"id":"c10","type":"deferred","amount":833,"dueDate":"2026-08-20","note":"","status":"pending"},{"id":"c11","type":"deferred","amount":2100,"dueDate":"2026-07-30","note":"","status":"pending"},{"id":"c12","type":"deferred","amount":559.67,"dueDate":"2026-07-20","note":"","status":"pending"}],"ui":{"tab":"dashboard","dealId":null}}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>دفتر بيع أجهزة Bein Sport | أجياد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --leather-dark:#2a1b17;
+    --leather:#3e2723;
+    --leather-light:#5a3a2e;
+    --gold:#c9a227;
+    --gold-soft:#e0c060;
+    --parchment:#f5efe3;
+    --parchment-dim:#ece2cc;
+    --ink:#2b2018;
+    --ink-soft:#6b5c4d;
+    --stitch:#8b6f47;
+    --green:#3f7d58;
+    --green-bg:#e5efe6;
+    --red:#b23a34;
+    --red-bg:#f6e6e4;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Cairo',sans-serif;
+    background:
+      radial-gradient(circle at 20% -10%, #4a2f24 0%, transparent 45%),
+      var(--leather-dark);
+    color:var(--parchment);
+    min-height:100vh;
+    padding-bottom:80px;
+  }
+  .num{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;}
+  header.hero{
+    padding:22px 18px 26px;
+    background:
+      linear-gradient(160deg, var(--leather) 0%, var(--leather-dark) 100%);
+    border-bottom:3px solid var(--gold);
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:repeating-linear-gradient(135deg, rgba(201,162,39,0.04) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .hero-title{
+    font-family:'Aref Ruqaa',serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--gold-soft);
+    margin:0 0 2px;
+    letter-spacing:.5px;
+  }
+  .hero-sub{
+    font-size:12.5px;
+    color:#cbb89a;
+    margin:0 0 16px;
+  }
+  .seal{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(0,0,0,0.18);
+    border:1.5px dashed var(--gold);
+    border-radius:16px;
+    padding:14px 16px;
+  }
+  .seal-label{font-size:12px;color:#d8c9a8;margin-bottom:4px;}
+  .seal-value{font-size:28px;font-weight:800;color:var(--gold-soft);}
+  .seal-value.negative{color:#e78e88;}
+  .seal-icon{
+    width:52px;height:52px;border-radius:50%;
+    border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;color:var(--gold);
+    flex-shrink:0;
+  }
+  nav.tabs{
+    display:flex;
+    background:var(--leather);
+    position:sticky;top:0;z-index:20;
+    box-shadow:0 2px 10px rgba(0,0,0,.35);
+  }
+  nav.tabs button{
+    flex:1;
+    padding:13px 4px;
+    background:none;border:none;
+    color:#c9b79b;
+    font-family:'Cairo',sans-serif;
+    font-size:13.5px;font-weight:600;
+    border-bottom:3px solid transparent;
+    cursor:pointer;
+  }
+  nav.tabs button.active{
+    color:var(--gold-soft);
+    border-bottom-color:var(--gold);
+  }
+  main{padding:16px;max-width:640px;margin:0 auto;}
+  .card{
+    background:var(--parchment);
+    color:var(--ink);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.25);
+    border-top:3px solid var(--stitch);
+    position:relative;
+  }
+  .card::after{
+    content:"";
+    position:absolute;top:6px;bottom:6px;right:6px;left:6px;
+    border:1px dashed rgba(139,111,71,.35);
+    border-radius:calc(var(--radius) - 4px);
+    pointer-events:none;
+  }
+  .card h3{margin:0 0 10px;font-size:16px;font-weight:700;color:var(--leather);}
+  .stat-row{display:flex;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .stat-box{
+    flex:1;background:var(--parchment-dim);
+    border-radius:10px;padding:10px 8px;text-align:center;
+  }
+  .stat-box .lbl{font-size:11px;color:var(--ink-soft);margin-bottom:4px;}
+  .stat-box .val{font-size:16.5px;font-weight:800;}
+  .val.green{color:var(--green);}
+  .val.red{color:var(--red);}
+  .val.gold{color:#8a6d1f;}
+  .caption{font-size:11.5px;color:var(--ink-soft);line-height:1.6;margin-top:4px;}
+  .stock-grid{display:flex;gap:10px;margin-top:6px;}
+  .stock-chip{
+    flex:1;
+    background:#fff;border:1px solid #e2d6ba;border-radius:10px;
+    padding:10px;text-align:center;
+  }
+  .stock-chip .tag{
+    display:inline-block;font-size:11px;font-weight:700;
+    padding:2px 8px;border-radius:20px;color:#fff;margin-bottom:6px;
+  }
+  .tag.pvr{background:#c9971c;}
+  .tag.k4{background:#a13b2f;}
+  .stock-chip .n{font-size:20px;font-weight:800;color:var(--ink);}
+  .stock-chip .sub{font-size:10.5px;color:var(--ink-soft);}
+  .deal-list-item{
+    display:flex;justify-content:space-between;align-items:center;
+    background:var(--parchment-dim);
+    border-radius:10px;padding:12px;margin-bottom:8px;
+    cursor:pointer;border:1px solid #e2d6ba;
+  }
+  .deal-list-item:active{background:#e0d3b0;}
+  .deal-name{font-weight:700;font-size:14.5px;}
+  .deal-date{font-size:11px;color:var(--ink-soft);}
+  .deal-balance{font-weight:800;font-size:15px;}
+  .btn{
+    display:inline-block;border:none;border-radius:10px;
+    padding:11px 14px;font-family:'Cairo',sans-serif;
+    font-weight:700;font-size:13.5px;cursor:pointer;
+  }
+  .btn-gold{background:var(--gold);color:var(--leather-dark);}
+  .btn-outline{background:none;border:1.5px solid var(--leather);color:var(--leather);}
+  .btn-block{width:100%;}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .btn-row .btn{flex:1;min-width:120px;}
+  .btn-danger-ghost{background:none;border:none;color:var(--red);font-size:12px;cursor:pointer;padding:4px;}
+  .back-link{
+    color:var(--gold-soft);background:none;border:none;
+    font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;
+    margin-bottom:12px;cursor:pointer;padding:4px 0;
+  }
+  .entry{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    padding:10px 0;border-bottom:1px dashed #d9caa9;
+  }
+  .entry:last-child{border-bottom:none;}
+  .entry .l{flex:1;}
+  .entry .type-badge{
+    font-size:10.5px;font-weight:700;padding:1px 8px;border-radius:20px;
+    display:inline-block;margin-bottom:3px;
+  }
+  .type-badge.purchase{background:var(--red-bg);color:var(--red);}
+  .type-badge.sale{background:var(--green-bg);color:var(--green);}
+  .type-badge.fee{background:#fbeecb;color:#8a6d1f;}
+  .type-badge.capital{background:var(--red-bg);color:var(--red);}
+  .type-badge.repay{background:var(--green-bg);color:var(--green);}
+  .entry .note{font-size:12px;color:var(--ink-soft);margin-top:2px;}
+  .entry .amt{font-weight:800;font-size:14.5px;white-space:nowrap;}
+  .empty{text-align:center;color:var(--ink-soft);font-size:13px;padding:26px 10px;}
+  .fab-space{height:6px;}
+  /* Modal */
+  .overlay{
+    position:fixed;inset:0;background:rgba(20,12,8,.6);
+    display:flex;align-items:flex-end;justify-content:center;
+    z-index:100;
+  }
+  .sheet{
+    background:var(--parchment);color:var(--ink);
+    width:100%;max-width:640px;border-radius:20px 20px 0 0;
+    padding:20px 18px 26px;
+    max-height:88vh;overflow-y:auto;
+  }
+  .sheet h3{margin:0 0 14px;color:var(--leather);font-size:17px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-soft);margin-bottom:5px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:11px 12px;border-radius:9px;border:1.5px solid #d9caa9;
+    font-family:'Cairo',sans-serif;font-size:14.5px;background:#fff;color:var(--ink);
+  }
+  .field .unitprice{font-size:11.5px;color:var(--ink-soft);margin-top:4px;}
+  .cat-toggle{display:flex;gap:8px;}
+  .cat-toggle button{
+    flex:1;padding:10px;border-radius:9px;border:1.5px solid #d9caa9;
+    background:#fff;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer;
+  }
+  .cat-toggle button.sel.pvr{background:#c9971c;color:#fff;border-color:#c9971c;}
+  .cat-toggle button.sel.k4{background:#a13b2f;color:#fff;border-color:#a13b2f;}
+  .sheet-actions{display:flex;gap:10px;margin-top:16px;}
+  .sheet-actions .btn{flex:1;}
+  .backup-box textarea{width:100%;height:90px;font-size:11px;font-family:monospace;direction:ltr;text-align:left;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-title">دفتر بيع أجهزة Bein Sport</p>
+  <p class="hero-sub">أجياد · متابعة الصفقات ورأس المال</p>
+  <div class="seal">
+    <div>
+      <div class="seal-label">الكاش الجاهز فعلياً بإيدك الآن</div>
+      <div class="seal-value num" id="cashOnHand">0</div>
+      <div class="hero-sub" id="cashSub" style="margin:4px 0 0;"></div>
+    </div>
+    <div class="seal-icon">💰</div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button data-tab="dashboard" class="active">لوحة عامة</button>
+  <button data-tab="deals">الصفقات</button>
+  <button data-tab="investor">حساب عمو محمد</button>
+  <button data-tab="checks">الشيكات</button>
+  <button data-tab="backup">نسخة احتياطية</button>
+</nav>
+
+<main id="main"></main>
+
+<div id="modalRoot"></div>
+
+<script>
+/* ---------------- Data layer ---------------- */
+const STORE_KEY = 'ajyadBeinLedger_v1';
+const CATS = { pvr:{label:'PVR', cls:'pvr'}, k4:{label:'4K', cls:'k4'} };
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return { deals: [], investor:{ name:'عمو محمد', entries: [] }, checks: [], ui:{ tab:'dashboard', dealId:null } };
+}
+function saveState(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+let state = loadState();
+if(!state.ui) state.ui = { tab:'dashboard', dealId:null };
+if(!state.checks) state.checks = [];
+
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+
+/* ---------------- Formatting ---------------- */
+function fmt(n){
+  n = Math.round((n + Number.EPSILON) * 1000) / 1000;
+  const neg = n < 0; n = Math.abs(n);
+  let parts = n.toFixed(3).split('.');
+  let intPart = parseInt(parts[0],10).toLocaleString('en-US');
+  let dec = parts[1].replace(/0+$/,'');
+  return (neg?'-':'') + intPart + (dec? '.'+dec : '') + ' د.ا';
+}
+
+/* ---------------- Calculations ---------------- */
+function dealStats(deal){
+  let purchases=0, sales=0, fees=0;
+  let stock = { pvr:{bought:0,sold:0,boughtAmt:0,soldAmt:0}, k4:{bought:0,sold:0,boughtAmt:0,soldAmt:0} };
+  deal.entries.forEach(e=>{
+    if(e.type==='purchase'){ purchases+=e.amount; stock[e.category].bought+=e.qty; stock[e.category].boughtAmt+=e.amount; }
+    else if(e.type==='sale'){ sales+=e.amount; stock[e.category].sold+=e.qty; stock[e.category].soldAmt+=e.amount; }
+    else if(e.type==='fee'){ fees+=e.amount; }
+  });
+  const balance = sales - purchases - fees;
+  return { purchases, sales, fees, balance, stock };
+}
+
+function investorStats(){
+  let capital=0, repay=0;
+  state.investor.entries.forEach(e=>{
+    if(e.type==='capital') capital += e.amount;
+    else if(e.type==='repay') repay += e.amount;
+  });
+  return { capital, repay, owed: capital - repay };
+}
+
+function globalStats(){
+  let purchases=0, sales=0, fees=0;
+  let stock = { pvr:{bought:0,sold:0}, k4:{bought:0,sold:0} };
+  state.deals.forEach(d=>{
+    const s = dealStats(d);
+    purchases += s.purchases; sales += s.sales; fees += s.fees;
+    stock.pvr.bought += s.stock.pvr.bought; stock.pvr.sold += s.stock.pvr.sold;
+    stock.k4.bought += s.stock.k4.bought; stock.k4.sold += s.stock.k4.sold;
+  });
+  const inv = investorStats();
+  const cashOnHand = (sales + inv.capital) - (purchases + inv.repay);
+  const chk = checksStats();
+  const liquidCash = cashOnHand - chk.deferredPending - chk.returnedPending;
+  return { purchases, sales, fees, stock, inv, cashOnHand, chk, liquidCash };
+}
+
+function checksStats(){
+  let deferredPending=0, deferredCashed=0, returnedPending=0, returnedResolved=0;
+  state.checks.forEach(c=>{
+    if(c.type==='deferred'){
+      if(c.status==='cashed') deferredCashed += c.amount; else deferredPending += c.amount;
+    } else {
+      if(c.status==='resolved') returnedResolved += c.amount; else returnedPending += c.amount;
+    }
+  });
+  return { deferredPending, deferredCashed, returnedPending, returnedResolved };
+}
+
+/* ---------------- Render root ---------------- */
+function render(){
+  document.querySelectorAll('nav.tabs button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.tab === state.ui.tab);
+  });
+  const g = globalStats();
+  const cashEl = document.getElementById('cashOnHand');
+  cashEl.textContent = fmt(g.liquidCash);
+  cashEl.classList.toggle('negative', g.liquidCash < 0);
+  const subEl = document.getElementById('cashSub');
+  const pendingTotal = g.chk.deferredPending + g.chk.returnedPending;
+  subEl.textContent = pendingTotal>0
+    ? `+ ${fmt(pendingTotal)} لسا بشيكات (${fmt(g.chk.deferredPending)} مؤجلة، ${fmt(g.chk.returnedPending)} مرتجعة)`
+    : '';
+
+  const main = document.getElementById('main');
+  if(state.ui.tab==='dashboard') main.innerHTML = renderDashboard(g);
+  else if(state.ui.tab==='deals'){
+    main.innerHTML = state.ui.dealId ? renderDealDetail(state.ui.dealId) : renderDealsList();
+  }
+  else if(state.ui.tab==='investor') main.innerHTML = renderInvestor();
+  else if(state.ui.tab==='checks') main.innerHTML = renderChecks(g);
+  else if(state.ui.tab==='backup') main.innerHTML = renderBackup();
+}
+
+/* ---------------- Dashboard ---------------- */
+function renderDashboard(g){
+  const inv = g.inv;
+  return `
+  <div class="card">
+    <h3>الوضع المالي العام</h3>
+    <div class="stat-row">
+      <div class="stat-box"><div class="lbl">مطلوب لعمو محمد</div><div class="val red num">${fmt(inv.owed)}</div></div>
+      <div class="stat-box"><div class="lbl">أرباحك المحصّلة</div><div class="val green num">${fmt(g.fees)}</div></div>
+    </div>
+    <p class="caption">الكاش الجاهز = (كل المبيعات + رأس المال المستلم من عمو) − (كل المشتريات + المبالغ يلي رجعتها لعمو) − الشيكات يلي لسا ما تحصّلت (مؤجلة أو مرتجعة). أرباحك (الأجرة) موجودة أصلاً جوا هالكاش، هي بس محجوزة إلك.</p>
+  </div>
+
+  <div class="card">
+    <h3>الشيكات المعلّقة</h3>
+    <div class="stat-row">
+      <div class="stat-box"><div class="lbl">مؤجلة (لسا ما استحقت)</div><div class="val gold num">${fmt(g.chk.deferredPending)}</div></div>
+      <div class="stat-box"><div class="lbl">مرتجعة (تحتاج متابعة)</div><div class="val red num">${fmt(g.chk.returnedPending)}</div></div>
+    </div>
+    <button class="btn btn-outline btn-block" onclick="state.ui.tab='checks';render()">إدارة الشيكات →</button>
+  </div>
+
+  <div class="card">
+    <h3>المخزون الحالي</h3>
+    <div class="stock-grid">
+      <div class="stock-chip">
+        <span class="tag pvr">PVR</span>
+        <div class="n num">${g.stock.pvr.bought - g.stock.pvr.sold}</div>
+        <div class="sub">قطعة متبقية (اشتريت ${g.stock.pvr.bought} وبعت ${g.stock.pvr.sold})</div>
+      </div>
+      <div class="stock-chip">
+        <span class="tag k4">4K</span>
+        <div class="n num">${g.stock.k4.bought - g.stock.k4.sold}</div>
+        <div class="sub">قطعة متبقية (اشتريت ${g.stock.k4.bought} وبعت ${g.stock.k4.sold})</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>الصفقات (${state.deals.length})</h3>
+    ${state.deals.length===0 ? '<p class="empty">ما في صفقات مسجّلة بعد. روح لتبويب "الصفقات" وضيف وحدة.</p>' :
+      state.deals.slice().reverse().map(d=>{
+        const s = dealStats(d);
+        return `<div class="deal-list-item" onclick="openDeal('${d.id}')">
+          <div><div class="deal-name">${escapeHtml(d.name)}</div><div class="deal-date">${d.createdAt}</div></div>
+          <div class="deal-balance ${s.balance>=0?'val green':'val red'} num">${fmt(s.balance)}</div>
+        </div>`;
+      }).join('')
+    }
+  </div>
+  `;
+}
+
+/* ---------------- Deals list ---------------- */
+function renderDealsList(){
+  return `
+  <button class="btn btn-gold btn-block" onclick="openNewDealForm()">+ صفقة جديدة</button>
+  <div class="fab-space"></div>
+  ${state.deals.length===0 ? '<p class="empty">ما في صفقات لسا. ابدأ بصفقة جديدة.</p>' :
+    state.deals.slice().reverse().map(d=>{
+      const s = dealStats(d);
+      return `<div class="card" style="cursor:pointer" onclick="openDeal('${d.id}')">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h3 style="margin-bottom:2px;">${escapeHtml(d.name)}</h3>
+            <div class="deal-date">${d.createdAt}</div>
+          </div>
+          <div class="${s.balance>=0?'val green':'val red'} num" style="font-size:18px;">${fmt(s.balance)}</div>
+        </div>
+      </div>`;
+    }).join('')
+  }
+  `;
+}
+
+function openDeal(id){ state.ui.dealId = id; render(); }
+function backToDeals(){ state.ui.dealId = null; render(); }
+
+/* ---------------- Deal detail ---------------- */
+function renderDealDetail(id){
+  const deal = state.deals.find(d=>d.id===id);
+  if(!deal){ state.ui.dealId=null; return renderDealsList(); }
+  const s = dealStats(deal);
+  return `
+  <button class="back-link" onclick="backToDeals()" style="color:var(--leather);">→ رجوع للصفقات</button>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <h3>${escapeHtml(deal.name)}</h3>
+      <button class="btn-danger-ghost" onclick="deleteDeal('${deal.id}')">حذف الصفقة</button>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="lbl">مشتريات</div><div class="val red num">${fmt(s.purchases)}</div></div>
+      <div class="stat-box"><div class="lbl">مبيعات</div><div class="val green num">${fmt(s.sales)}</div></div>
+      <div class="stat-box"><div class="lbl">أجرتك</div><div class="val gold num">${fmt(s.fees)}</div></div>
+    </div>
+    <div class="stat-row" style="margin-bottom:0;">
+      <div class="stat-box" style="flex:1;background:${s.balance>=0?'var(--green-bg)':'var(--red-bg)'};">
+        <div class="lbl">الرصيد الحالي للصفقة</div>
+        <div class="val ${s.balance>=0?'green':'red'} num" style="font-size:20px;">${fmt(s.balance)}</div>
+      </div>
+    </div>
+    <div class="stock-grid">
+      <div class="stock-chip">
+        <span class="tag pvr">PVR</span>
+        <div class="n num">${s.stock.pvr.bought - s.stock.pvr.sold}</div>
+        <div class="sub">متبقي · اشتريت ${s.stock.pvr.bought} بمعدل ${s.stock.pvr.bought? fmt(s.stock.pvr.boughtAmt/s.stock.pvr.bought):fmt(0)}/قطعة</div>
+      </div>
+      <div class="stock-chip">
+        <span class="tag k4">4K</span>
+        <div class="n num">${s.stock.k4.bought - s.stock.k4.sold}</div>
+        <div class="sub">متبقي · اشتريت ${s.stock.k4.bought} بمعدل ${s.stock.k4.bought? fmt(s.stock.k4.boughtAmt/s.stock.k4.bought):fmt(0)}/قطعة</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="openEntryForm('${deal.id}','purchase')">+ تسجيل شراء</button>
+      <button class="btn btn-outline" onclick="openEntryForm('${deal.id}','sale')">+ تسجيل بيع</button>
+      <button class="btn btn-outline" onclick="openEntryForm('${deal.id}','fee')">+ أجرة / مصروف</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>سجل الحركات</h3>
+    ${deal.entries.length===0 ? '<p class="empty">ما في حركات مسجّلة بعد.</p>' :
+      deal.entries.slice().reverse().map(e=>renderEntryRow(deal.id, e)).join('')
+    }
+  </div>
+  `;
+}
+
+function renderEntryRow(dealId, e){
+  let badgeText, sign, catLabel='';
+  if(e.type==='purchase'){ badgeText='شراء'; sign='-'; catLabel=CATS[e.category].label; }
+  else if(e.type==='sale'){ badgeText='بيع'; sign='+'; catLabel=CATS[e.category].label; }
+  else { badgeText='أجرة/مصروف'; sign='-'; }
+  const qtyText = e.qty ? ` · ${e.qty} قطعة (${fmt(e.amount/e.qty)}/قطعة)` : '';
+  return `<div class="entry">
+    <div class="l">
+      <span class="type-badge ${e.type}">${badgeText}${catLabel? ' · '+catLabel:''}</span>
+      <div style="font-size:12.5px;color:var(--ink-soft);">${e.date}${qtyText}</div>
+      ${e.note? `<div class="note">${escapeHtml(e.note)}</div>`:''}
+    </div>
+    <div style="text-align:left;">
+      <div class="amt ${sign==='+'?'val green':'val red'} num">${sign}${fmt(e.amount)}</div>
+      <button class="btn-danger-ghost" onclick="deleteEntry('${dealId}','${e.id}')">حذف</button>
+    </div>
+  </div>`;
+}
+
+function deleteDeal(id){
+  if(!confirm('متأكد بدك تحذف هالصفقة بكل حركاتها؟')) return;
+  state.deals = state.deals.filter(d=>d.id!==id);
+  state.ui.dealId = null;
+  saveState(); render();
+}
+function deleteEntry(dealId, entryId){
+  const deal = state.deals.find(d=>d.id===dealId);
+  if(!deal) return;
+  deal.entries = deal.entries.filter(e=>e.id!==entryId);
+  saveState(); render();
+}
+
+/* ---------------- Investor tab ---------------- */
+function renderInvestor(){
+  const inv = investorStats();
+  return `
+  <div class="card">
+    <h3>حساب ${escapeHtml(state.investor.name)}</h3>
+    <div class="stat-row">
+      <div class="stat-box"><div class="lbl">رأس مال أخذته منه</div><div class="val red num">${fmt(inv.capital)}</div></div>
+      <div class="stat-box"><div class="lbl">سددته إله</div><div class="val green num">${fmt(inv.repay)}</div></div>
+    </div>
+    <div class="stat-box" style="background:${inv.owed>0?'var(--red-bg)':'var(--green-bg)'};">
+      <div class="lbl">${inv.owed>0? 'المتبقي المطلوب منك':'رصيدك زايد إله'}</div>
+      <div class="val ${inv.owed>0?'red':'green'} num" style="font-size:20px;">${fmt(Math.abs(inv.owed))}</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="openInvestorForm('capital')">+ استلمت رأس مال</button>
+      <button class="btn btn-outline" onclick="openInvestorForm('repay')">+ سددت له مبلغ</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>سجل الحركات</h3>
+    ${state.investor.entries.length===0 ? '<p class="empty">ما في حركات بعد.</p>' :
+      state.investor.entries.slice().reverse().map(e=>{
+        const badgeText = e.type==='capital' ? 'استلام رأس مال' : 'تسديد';
+        const sign = e.type==='capital' ? '-' : '+';
+        return `<div class="entry">
+          <div class="l">
+            <span class="type-badge ${e.type}">${badgeText}</span>
+            <div style="font-size:12.5px;color:var(--ink-soft);">${e.date}</div>
+            ${e.note? `<div class="note">${escapeHtml(e.note)}</div>`:''}
+          </div>
+          <div style="text-align:left;">
+            <div class="amt ${e.type==='capital'?'val red':'val green'} num">${fmt(e.amount)}</div>
+            <button class="btn-danger-ghost" onclick="deleteInvestorEntry('${e.id}')">حذف</button>
+          </div>
+        </div>`;
+      }).join('')
+    }
+  </div>
+  `;
+}
+function deleteInvestorEntry(id){
+  state.investor.entries = state.investor.entries.filter(e=>e.id!==id);
+  saveState(); render();
+}
+
+/* ---------------- Backup tab ---------------- */
+function renderBackup(){
+  return `
+  <div class="card backup-box">
+    <h3>نسخة احتياطية</h3>
+    <p class="caption">البيانات محفوظة بهالمتصفح بس. خذلك نسخة بين فترة وفترة عشان ما تضيع.</p>
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="downloadBackup()">تنزيل نسخة (JSON)</button>
+      <button class="btn btn-outline" onclick="document.getElementById('importFile').click()">استيراد نسخة</button>
+    </div>
+    <input type="file" id="importFile" accept="application/json,.json,.txt" style="display:none" onchange="importBackup(event)">
+    <p class="caption" style="margin-top:14px;">لو الاستيراد بالملف ما اشتغل (بيصير أحياناً بالموبايل)، الصق نص البيانات هون واضغط استيراد:</p>
+    <textarea id="importPasteBox" placeholder="الصق نص الـ JSON هون..."></textarea>
+    <button class="btn btn-gold btn-block" style="margin-top:8px;" onclick="importFromPaste()">استيراد من النص الملصوق</button>
+    <p class="caption" style="margin-top:14px;">أو انسخ النص هذا واحفظه بمكان آمن (نوتس مثلاً):</p>
+    <textarea readonly>${escapeHtml(JSON.stringify(state))}</textarea>
+  </div>
+  `;
+}
+function downloadBackup(){
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'ajyad-bein-ledger-backup.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function importFromPaste(){
+  const raw = document.getElementById('importPasteBox').value.trim();
+  if(!raw){ alert('الصق النص الأول'); return; }
+  try{
+    const data = JSON.parse(raw);
+    if(!data.deals || !data.investor) throw new Error('bad format');
+    if(!confirm('استيراد هالنسخة رح يستبدل كل البيانات الحالية. متأكد؟')) return;
+    state = data;
+    state.ui = { tab:'dashboard', dealId:null };
+    saveState(); render();
+    alert('تم الاستيراد بنجاح');
+  }catch(e){ alert('النص مش صالح، تأكد إنك نسخته كامل'); }
+}
+function importBackup(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const data = JSON.parse(reader.result);
+      if(!data.deals || !data.investor) throw new Error('bad format');
+      if(!confirm('استيراد هالنسخة رح يستبدل كل البيانات الحالية. متأكد؟')) return;
+      state = data;
+      state.ui = { tab:'backup', dealId:null };
+      saveState(); render();
+      alert('تم الاستيراد بنجاح');
+    }catch(e){ alert('الملف مش صالح'); }
+  };
+  reader.readAsText(file);
+}
+
+/* ---------------- Checks tab ---------------- */
+function renderChecks(g){
+  const sorted = state.checks.slice().sort((a,b)=> (a.dueDate||'').localeCompare(b.dueDate||''));
+  return `
+  <div class="card">
+    <h3>الشيكات</h3>
+    <div class="stat-row">
+      <div class="stat-box"><div class="lbl">مؤجلة معلّقة</div><div class="val gold num">${fmt(g.chk.deferredPending)}</div></div>
+      <div class="stat-box"><div class="lbl">مرتجعة معلّقة</div><div class="val red num">${fmt(g.chk.returnedPending)}</div></div>
+    </div>
+    <p class="caption">الشيكات المؤجلة بتصير كاش لما يجي تاريخ استحقاقها - اضغط "تحصّل" لما تصرفها. الشيكات المرتجعة معناها المبلغ رجع/ما انصرف، اضغط "تحل" لما تحصّلها أو تسوي البديل.</p>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="openCheckForm('deferred')">+ شيك مؤجل</button>
+      <button class="btn btn-outline" onclick="openCheckForm('returned')">+ شيك مرتجع</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>كل الشيكات (${state.checks.length})</h3>
+    ${sorted.length===0 ? '<p class="empty">ما في شيكات مسجّلة.</p>' :
+      sorted.map(c=>{
+        const resolved = c.status==='cashed' || c.status==='resolved';
+        const badge = c.type==='deferred' ? 'مؤجل' : 'مرتجع';
+        const actionLabel = c.type==='deferred' ? 'تحصّل ✓' : 'تحل ✓';
+        return `<div class="entry">
+          <div class="l">
+            <span class="type-badge ${c.type==='deferred'?'fee':'purchase'}" style="opacity:${resolved?0.5:1};">${badge}${resolved?' · تم':''}</span>
+            <div style="font-size:12.5px;color:var(--ink-soft);">استحقاق: ${c.dueDate||'-'}</div>
+            ${c.note? `<div class="note">${escapeHtml(c.note)}</div>`:''}
+          </div>
+          <div style="text-align:left;">
+            <div class="amt num" style="opacity:${resolved?0.5:1};">${fmt(c.amount)}</div>
+            ${!resolved ? `<button class="btn-danger-ghost" style="color:var(--green);" onclick="toggleCheckStatus('${c.id}')">${actionLabel}</button>` : ''}
+            <button class="btn-danger-ghost" onclick="deleteCheck('${c.id}')">حذف</button>
+          </div>
+        </div>`;
+      }).join('')
+    }
+  </div>
+  `;
+}
+function openCheckForm(type){
+  const title = type==='deferred' ? 'إضافة شيك مؤجل' : 'إضافة شيك مرتجع';
+  document.getElementById('modalRoot').innerHTML = `
+  <div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="sheet">
+      <h3>${title}</h3>
+      <div class="field">
+        <label>المبلغ (د.ا)</label>
+        <input id="f_amount" type="number" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label>تاريخ الاستحقاق</label>
+        <input id="f_date" type="date" value="${todayStr()}">
+      </div>
+      <div class="field">
+        <label>ملاحظة (اختياري)</label>
+        <input id="f_note" type="text" placeholder="مين الشيك أو أي تفصيل">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveCheckEntry('${type}')">حفظ</button>
+      </div>
+    </div>
+  </div>`;
+}
+function saveCheckEntry(type){
+  const amount = parseFloat(document.getElementById('f_amount').value);
+  const dueDate = document.getElementById('f_date').value || todayStr();
+  const note = document.getElementById('f_note').value.trim();
+  if(!(amount>0)){ alert('دخل مبلغ صحيح'); return; }
+  state.checks.push({ id:uid(), type, amount, dueDate, note, status:'pending' });
+  saveState(); closeModal(); render();
+}
+function toggleCheckStatus(id){
+  const c = state.checks.find(x=>x.id===id);
+  if(!c) return;
+  c.status = c.type==='deferred' ? 'cashed' : 'resolved';
+  saveState(); render();
+}
+function deleteCheck(id){
+  state.checks = state.checks.filter(c=>c.id!==id);
+  saveState(); render();
+}
+
+/* ---------------- Modals / forms ---------------- */
+function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
+
+function openNewDealForm(){
+  document.getElementById('modalRoot').innerHTML = `
+  <div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="sheet">
+      <h3>صفقة جديدة</h3>
+      <div class="field">
+        <label>اسم الصفقة</label>
+        <input id="f_dealName" type="text" placeholder="مثلاً: Bein (3) PVR و4K">
+      </div>
+      <div class="field">
+        <label>التاريخ</label>
+        <input id="f_dealDate" type="date" value="${todayStr()}">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveNewDeal()">حفظ</button>
+      </div>
+    </div>
+  </div>`;
+}
+function saveNewDeal(){
+  const name = document.getElementById('f_dealName').value.trim();
+  const date = document.getElementById('f_dealDate').value || todayStr();
+  if(!name){ alert('اكتب اسم للصفقة'); return; }
+  const deal = { id:uid(), name, createdAt:date, entries:[] };
+  state.deals.push(deal);
+  saveState(); closeModal();
+  state.ui.tab='deals'; state.ui.dealId=deal.id;
+  render();
+}
+
+function openEntryForm(dealId, type){
+  const isTxn = type==='purchase' || type==='sale';
+  const title = type==='purchase' ? 'تسجيل شراء' : type==='sale' ? 'تسجيل بيع' : 'أجرة / مصروف';
+  document.getElementById('modalRoot').innerHTML = `
+  <div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="sheet">
+      <h3>${title}</h3>
+      ${isTxn ? `
+      <div class="field">
+        <label>نوع الجهاز</label>
+        <div class="cat-toggle">
+          <button type="button" id="catBtnPvr" class="sel pvr" onclick="selectCat('pvr')">PVR</button>
+          <button type="button" id="catBtnK4" class="k4" onclick="selectCat('k4')">4K</button>
+        </div>
+        <input type="hidden" id="f_cat" value="pvr">
+      </div>
+      <div class="field">
+        <label>عدد القطع</label>
+        <input id="f_qty" type="number" min="1" step="1" placeholder="مثلاً 10" oninput="updateUnitPrice()">
+      </div>
+      ` : ''}
+      <div class="field">
+        <label>المبلغ الإجمالي (د.ا)</label>
+        <input id="f_amount" type="number" min="0" step="0.01" placeholder="0.00" oninput="updateUnitPrice()">
+        ${isTxn ? '<div class="unitprice" id="unitPriceHint"></div>' : ''}
+      </div>
+      <div class="field">
+        <label>التاريخ</label>
+        <input id="f_date" type="date" value="${todayStr()}">
+      </div>
+      <div class="field">
+        <label>ملاحظة (اختياري)</label>
+        <input id="f_note" type="text" placeholder="أي تفصيل حابب تسجله">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveEntry('${dealId}','${type}')">حفظ</button>
+      </div>
+    </div>
+  </div>`;
+}
+function selectCat(cat){
+  document.getElementById('f_cat').value = cat;
+  document.getElementById('catBtnPvr').classList.toggle('sel', cat==='pvr');
+  document.getElementById('catBtnK4').classList.toggle('sel', cat==='k4');
+}
+function updateUnitPrice(){
+  const hint = document.getElementById('unitPriceHint');
+  if(!hint) return;
+  const qty = parseFloat(document.getElementById('f_qty').value);
+  const amt = parseFloat(document.getElementById('f_amount').value);
+  if(qty>0 && amt>=0) hint.textContent = 'سعر القطعة تقريباً: ' + fmt(amt/qty);
+  else hint.textContent = '';
+}
+function saveEntry(dealId, type){
+  const deal = state.deals.find(d=>d.id===dealId);
+  if(!deal) return;
+  const amount = parseFloat(document.getElementById('f_amount').value);
+  const date = document.getElementById('f_date').value || todayStr();
+  const note = document.getElementById('f_note').value.trim();
+  if(!(amount>0)){ alert('دخل مبلغ صحيح'); return; }
+  const entry = { id:uid(), type, amount, date, note };
+  if(type==='purchase' || type==='sale'){
+    const qty = parseInt(document.getElementById('f_qty').value,10);
+    if(!(qty>0)){ alert('دخل عدد قطع صحيح'); return; }
+    entry.qty = qty;
+    entry.category = document.getElementById('f_cat').value;
+  }
+  deal.entries.push(entry);
+  saveState(); closeModal(); render();
+}
+
+function openInvestorForm(type){
+  const title = type==='capital' ? 'استلام رأس مال من عمو محمد' : 'تسديد مبلغ لعمو محمد';
+  document.getElementById('modalRoot').innerHTML = `
+  <div class="overlay" onclick="if(event.target===this)closeModal()">
+    <div class="sheet">
+      <h3>${title}</h3>
+      <div class="field">
+        <label>المبلغ (د.ا)</label>
+        <input id="f_amount" type="number" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label>التاريخ</label>
+        <input id="f_date" type="date" value="${todayStr()}">
+      </div>
+      <div class="field">
+        <label>ملاحظة (اختياري)</label>
+        <input id="f_note" type="text" placeholder="مثلاً: أخذتهم من عمو عبدالسلام">
+      </div>
+      <div class="sheet-actions">
+        <button class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+        <button class="btn btn-gold" onclick="saveInvestorEntry('${type}')">حفظ</button>
+      </div>
+    </div>
+  </div>`;
+}
+function saveInvestorEntry(type){
+  const amount = parseFloat(document.getElementById('f_amount').value);
+  const date = document.getElementById('f_date').value || todayStr();
+  const note = document.getElementById('f_note').value.trim();
+  if(!(amount>0)){ alert('دخل مبلغ صحيح'); return; }
+  state.investor.entries.push({ id:uid(), type, amount, date, note });
+  saveState(); closeModal(); render();
+}
+
+/* ---------------- Utils ---------------- */
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+/* ---------------- Init ---------------- */
+document.querySelectorAll('nav.tabs button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    state.ui.tab = btn.dataset.tab;
+    if(btn.dataset.tab!=='deals') state.ui.dealId = null;
+    saveState(); render();
+  });
+});
+render();
+</script>
+</body>
+</html>
