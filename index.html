@@ -194,6 +194,21 @@
 </div>
 <div class="toast" id="toast"></div>
 <script>
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzfpzWxYmWh3V-HDuwWyfvAlOuuO1dgcV_Uv0_xeHn1tmi89CQsTx3BFhQTfLsJvZGv1Q/exec';
+
+  async function sendToSheet(data) {
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } catch(e) {
+      console.log('Sheet sync error:', e);
+    }
+  }
+
   const today = new Date();
   const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   document.getElementById('todayDate').textContent = today.toLocaleDateString('ar-SA-u-ca-gregory', opts);
@@ -264,6 +279,7 @@
     card.innerHTML = buildCardHTML(data, count);
     document.getElementById('todayCards').appendChild(card);
     saveTodayToStorage();
+    sendToSheet(data);
     showToast('✅ تمت الإضافة');
     clearForm();
   }
